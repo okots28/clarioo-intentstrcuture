@@ -97,7 +97,6 @@
 
   /* ====== SECTION 2: UNPACK (Request Overview + Connections) ====== */
   .unpack-container { max-width: 1200px; margin: 0 auto; }
-  .unpack-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
 
   /* Left: Request Overview */
   .original-request {
@@ -106,21 +105,125 @@
   }
   .original-request::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--red), var(--orange)); }
   .original-request h3 { color: var(--red); font-size: 11px; letter-spacing: 2px; margin-bottom: 12px; font-weight: 700; }
-  .original-request .quote { font-size: 17px; color: var(--text); font-style: italic; line-height: 1.7; border-left: 3px solid var(--red); padding-left: 16px; }
-  .original-request .meta { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+  .original-request .quote { font-size: 19px; color: var(--text); font-style: italic; line-height: 1.7; border-left: 3px solid var(--red); padding-left: 18px; }
+  .original-request .meta { margin-top: 14px; font-size: 13px; color: var(--text-muted); }
 
   .unpack-step {
     background: var(--surface); border-radius: 12px; padding: 20px;
     margin-bottom: 12px; border-left: 4px solid; transition: all 0.3s;
   }
   .unpack-step:hover { transform: translateX(3px); box-shadow: 0 6px 24px rgba(0,0,0,0.15); }
-  .unpack-step h3 { font-size: 11px; font-weight: 800; letter-spacing: 2px; margin-bottom: 5px; }
-  .unpack-step h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-  .unpack-step ul { font-size: 13px; color: var(--text-dim); line-height: 1.7; list-style: none; padding: 0; }
+  .unpack-step h3 { font-size: 12px; font-weight: 800; letter-spacing: 2px; margin-bottom: 6px; }
+  .unpack-step h4 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .unpack-step ul { font-size: 14px; color: var(--text-dim); line-height: 1.7; list-style: none; padding: 0; }
   .unpack-step ul li { padding: 3px 0 3px 18px; position: relative; }
   .unpack-step ul li::before { content: '→'; position: absolute; left: 0; opacity: 0.5; }
   .step-teal { border-color: var(--accent); } .step-teal h3 { color: var(--accent); }
   .step-cyan { border-color: var(--cyan); } .step-cyan h3 { color: var(--cyan); }
+
+  .unpack-trio {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 16px;
+  }
+  .unpack-trio .unpack-step { margin-bottom: 0; }
+
+  /* Divider */
+  .unpack-divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 48px 0 36px; padding: 0 20px;
+  }
+  .unpack-divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(14,165,233,0.25), transparent); }
+  .unpack-divider-text {
+    font-size: 15px; font-weight: 700; color: var(--accent);
+    white-space: nowrap; letter-spacing: 0.5px;
+    padding: 8px 20px; background: rgba(14,165,233,0.06);
+    border: 1px solid rgba(14,165,233,0.15); border-radius: 10px;
+  }
+
+  /* Part 2: connections left, decision card right */
+  .unpack-part2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Decision card panel */
+  .decision-card-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .decision-stakeholders {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 22px;
+  }
+  .decision-stakeholders h4 {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .stake-role { margin-bottom: 14px; }
+  .stake-role:last-child { margin-bottom: 0; }
+  .stake-role-label {
+    font-size: 11px; font-weight: 600; color: var(--text-muted);
+    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .stake-role-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* Evidence panel */
+  .evidence-panel {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 22px; margin-top: 16px;
+  }
+  .evidence-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    color: var(--text-muted); text-transform: uppercase; margin-bottom: 14px;
+  }
+  .evidence-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .evidence-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; border-radius: 10px;
+    background: rgba(11,18,33,0.5); border: 1px solid transparent;
+    transition: all 0.25s; cursor: pointer;
+  }
+  .evidence-item:hover {
+    border-color: var(--border-hover); background: rgba(14,165,233,0.04);
+    transform: translateX(2px);
+  }
+  .evidence-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .evidence-info { flex: 1; min-width: 0; }
+  .evidence-name { font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .evidence-meta { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .evidence-badge {
+    font-size: 10px; font-weight: 700; padding: 3px 10px;
+    border-radius: 6px; white-space: nowrap; flex-shrink: 0; letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 768px) {
+    .evidence-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Decision Path CTA */
+  .decision-next {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    padding: 24px 28px; border-radius: 16px; cursor: pointer;
+    background: linear-gradient(135deg, var(--accent), #0369A1);
+    border: none;
+    font-size: 17px; font-weight: 800; color: #fff;
+    transition: all 0.3s; position: relative; overflow: hidden;
+    box-shadow: 0 4px 20px var(--accent-glow);
+  }
+  .decision-next::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1), transparent 60%);
+  }
+  .decision-next:hover {
+    box-shadow: 0 8px 32px rgba(14,165,233,0.4);
+    transform: translateY(-2px);
+  }
+  .decision-next-arrow { font-size: 22px; transition: transform 0.3s; position: relative; }
+  .decision-next:hover .decision-next-arrow { transform: translateX(6px); }
+
+  @media (max-width: 768px) {
+    .unpack-trio { grid-template-columns: 1fr; }
+    .unpack-part2 { grid-template-columns: 1fr; }
+  }
 
   /* Structured Decision Card */
   .structured-output {
@@ -130,7 +233,7 @@
   }
   .structured-output::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--green)); }
   .structured-output h3 { color: var(--accent); font-size: 11px; letter-spacing: 2px; margin-bottom: 14px; font-weight: 700; }
-  .output-field { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid rgba(148,163,184,0.08); font-size: 13px; }
+  .output-field { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(148,163,184,0.08); font-size: 14px; }
   .output-field:last-of-type { border-bottom: none; }
   .output-label { color: var(--text-muted); font-weight: 500; }
   .output-value { color: var(--text); font-weight: 600; text-align: right; max-width: 60%; }
@@ -159,7 +262,7 @@
   .conn-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
   .conn-card-source { font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 2px 8px; border-radius: 12px; }
   .conn-card-dept { font-size: 11px; color: var(--text-muted); }
-  .conn-card-text { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .conn-card-text { font-size: 14px; color: var(--text-dim); line-height: 1.55; }
   .conn-card-relation { margin-top: 8px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px; display: inline-block; }
   .relation-duplicate { background: rgba(239,68,68,0.1); color: var(--red); }
   .relation-related { background: rgba(14,165,233,0.1); color: var(--accent); }
@@ -300,6 +403,94 @@
   .dp-outcome h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px; position: relative; }
   .dp-outcome p { font-size: 14px; color: rgba(255,255,255,0.8); position: relative; line-height: 1.6; }
 
+  /* ====== CLUSTER TOGGLE ====== */
+  .cluster-toggle { display: flex; justify-content: center; margin-bottom: 28px; }
+  .cluster-toggle-inner {
+    display: flex; gap: 4px; background: rgba(255,255,255,0.04);
+    border-radius: 12px; padding: 4px; border: 1px solid var(--border);
+  }
+  .cluster-toggle-btn {
+    padding: 10px 24px; border-radius: 10px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s; color: var(--text-muted);
+    background: transparent; border: none; font-family: inherit;
+  }
+  .cluster-toggle-btn:hover { color: var(--text); }
+  .cluster-toggle-btn.active {
+    color: #fff; background: linear-gradient(135deg, var(--accent), #0284C7);
+    box-shadow: 0 2px 12px var(--accent-glow);
+  }
+
+  /* ====== HEATMAP MATRIX ====== */
+  .cluster-matrix-wrap { max-width: 1240px; margin: 0 auto 28px; overflow-x: auto; }
+  .cluster-matrix {
+    width: 100%; border-collapse: separate; border-spacing: 3px;
+    table-layout: fixed;
+  }
+  .cluster-matrix th {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+    color: var(--text-muted); padding: 6px 4px; text-align: center;
+    white-space: nowrap;
+  }
+  .cluster-matrix th.matrix-row-header {
+    text-align: right; padding-right: 10px; width: 100px; font-size: 11px; color: var(--text-dim);
+  }
+  .matrix-cell {
+    height: 34px; border-radius: 6px; text-align: center; vertical-align: middle;
+    font-size: 12px; font-weight: 700; cursor: default;
+    background: rgba(255,255,255,0.015); color: transparent;
+    transition: all 0.25s; position: relative;
+  }
+  .matrix-cell.has-items {
+    cursor: pointer; color: var(--text);
+  }
+  .matrix-cell.c1 { background: rgba(14,165,233,0.08); color: var(--accent); }
+  .matrix-cell.c2 { background: rgba(14,165,233,0.16); color: var(--accent); }
+  .matrix-cell.c3 { background: rgba(14,165,233,0.24); color: #fff; }
+  .matrix-cell.has-items:hover {
+    transform: scale(1.2); z-index: 2;
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+  .matrix-cell.active-cell {
+    outline: 2px solid var(--accent); outline-offset: 1px;
+    box-shadow: 0 0 12px var(--accent-glow);
+  }
+  .matrix-cell.has-highlight {
+    animation: pulse-cell 2s ease-in-out infinite;
+  }
+  @keyframes pulse-cell {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(14,165,233,0); }
+    50% { box-shadow: 0 0 8px 2px rgba(14,165,233,0.3); }
+  }
+
+  /* ====== FILTER BREADCRUMB ====== */
+  .filter-breadcrumb {
+    display: none; justify-content: center; margin-bottom: 20px;
+  }
+  .filter-breadcrumb.active { display: flex; }
+  .filter-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600;
+    background: rgba(14,165,233,0.1); color: var(--accent);
+    border: 1px solid rgba(14,165,233,0.2);
+  }
+  .filter-pill .filter-x {
+    width: 18px; height: 18px; border-radius: 50%; background: rgba(14,165,233,0.2);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 12px; transition: background 0.2s;
+  }
+  .filter-pill .filter-x:hover { background: var(--red); color: #fff; }
+
+  /* ====== CROSS-REF PILL ====== */
+  .item-cross-ref {
+    font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 5px;
+    white-space: nowrap; margin-left: 6px; flex-shrink: 0;
+  }
+
+  /* ====== DIM ITEMS ON HOVER ====== */
+  .cluster-group.dimmed { opacity: 0.25; }
+  .cluster-item.dimmed { opacity: 0.25; }
+  .cluster-group.matrix-highlight { border-color: var(--accent); box-shadow: 0 4px 20px var(--accent-glow); }
+
   /* ====== SECTION 4: CLUSTERS ====== */
   .clusters-container { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 18px; }
   .cluster-group {
@@ -320,6 +511,20 @@
     align-items: center; transition: all 0.2s; border: 1px solid transparent;
   }
   .cluster-item:hover { background: rgba(14,165,233,0.04); border-color: var(--border); }
+  .cluster-item.highlighted-item {
+    background: linear-gradient(135deg, rgba(14,165,233,0.1), rgba(6,182,212,0.06));
+    border-color: var(--accent); cursor: pointer;
+  }
+  .cluster-item.highlighted-item:hover {
+    background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(6,182,212,0.08));
+    box-shadow: 0 4px 16px var(--accent-glow);
+  }
+  .cluster-item.highlighted-item span:first-child { color: var(--text); font-weight: 600; }
+  .cluster-item.highlighted-item::after {
+    content: 'Click to unpack →';
+    font-size: 10px; font-weight: 600; color: var(--accent);
+    margin-left: 8px; white-space: nowrap;
+  }
   .cluster-item .priority { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
   .priority.critical { background: rgba(239,68,68,0.12); color: var(--red); }
   .priority.high { background: rgba(245,158,11,0.12); color: var(--orange); }
@@ -348,7 +553,8 @@
     .nav-tab { padding: 6px 10px; font-size: 11px; }
     .section { padding: 72px 16px 40px; }
     .section-title { font-size: 26px; }
-    .unpack-layout { grid-template-columns: 1fr; }
+    .unpack-trio { grid-template-columns: 1fr; }
+    .unpack-part2 { grid-template-columns: 1fr; }
     .clusters-container { grid-template-columns: 1fr; }
     .requests-grid { grid-template-columns: 1fr; }
     .cluster-stats { gap: 20px; flex-wrap: wrap; }
@@ -359,6 +565,147 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.2); border-radius: 4px; }
   ::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.3); }
+
+  /* ====== SECTION 1: CAPTURE ====== */
+  .capture-container { max-width: 900px; margin: 0 auto; }
+  .capture-source-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+  .capture-source-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 18px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    border: 1px solid; transition: all 0.3s;
+  }
+  .capture-source-pill.active { transform: scale(1.06); }
+  .capture-source-pill .pill-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .capture-moment {
+    background: var(--surface); border: 1px solid rgba(14,165,233,0.2);
+    border-radius: 16px; padding: 28px 32px; margin-bottom: 28px;
+    position: relative; overflow: hidden;
+  }
+  .capture-moment::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--cyan)); }
+
+  .capture-source-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
+  }
+  .capture-quote {
+    font-size: 22px; font-weight: 600; color: var(--text); font-style: italic;
+    line-height: 1.6; border-left: 3px solid var(--accent); padding-left: 20px;
+    margin-bottom: 14px;
+  }
+  .capture-meta { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .capture-meta span { display: flex; align-items: center; gap: 5px; }
+
+  .capture-arrow {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    margin: 0 auto 28px; width: fit-content;
+  }
+  .capture-arrow-line { width: 2px; height: 32px; background: linear-gradient(180deg, var(--accent), transparent); }
+  .capture-arrow-head { font-size: 18px; color: var(--accent); opacity: 0.7; }
+
+  .capture-log {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden; margin-bottom: 28px;
+  }
+  .capture-log-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 20px; background: rgba(14,165,233,0.04);
+    border-bottom: 1px solid var(--border);
+  }
+  .capture-log-icon {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0;
+  }
+  .capture-log-title { font-size: 13px; font-weight: 700; color: var(--accent); }
+  .capture-log-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .capture-log-rows { padding: 8px 0; }
+  .capture-log-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 10px 20px; border-bottom: 1px solid rgba(148,163,184,0.05);
+    transition: background 0.2s;
+  }
+  .capture-log-row:last-child { border-bottom: none; }
+  .capture-log-row:hover { background: rgba(14,165,233,0.03); }
+  .capture-log-num {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; margin-top: 1px;
+  }
+  .capture-log-text { font-size: 13px; color: var(--text-dim); line-height: 1.55; flex: 1; }
+  .capture-log-text strong { color: var(--text); }
+  .capture-log-badge {
+    font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 5px;
+    white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+  }
+
+  /* ====== SECTION 5: IN MOTION ====== */
+  .motion-container { max-width: 1240px; margin: 0 auto; }
+  .motion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Slack Mock — authentic Slack dark theme colors */
+  .slack-mock { background: #1A1D21; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04); }
+  .slack-sidebar { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: #19171D; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .slack-sidebar-dot { width: 10px; height: 10px; border-radius: 3px; background: #4A154B; }
+  .slack-sidebar-name { font-size: 14px; font-weight: 800; color: #fff; }
+  .slack-channel-bar { display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: #222529; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .slack-hash { color: #B5BAC1; font-size: 18px; font-weight: 400; }
+  .slack-channel-name { font-size: 15px; font-weight: 700; color: #D1D2D3; }
+  .slack-channel-desc { font-size: 11px; color: #B5BAC1; margin-left: auto; }
+  .slack-messages { padding: 16px 18px; display: flex; flex-direction: column; gap: 16px; max-height: 560px; overflow-y: auto; background: #1A1D21; }
+  .slack-msg { display: flex; gap: 10px; }
+  .slack-avatar { width: 36px; height: 36px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; }
+  .slack-msg-body { flex: 1; min-width: 0; }
+  .slack-msg-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 3px; }
+  .slack-msg-name { font-size: 13px; font-weight: 700; color: #D1D2D3; }
+  .slack-msg-time { font-size: 11px; color: #616061; }
+  .slack-msg-badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+  .slack-msg-text { font-size: 13px; color: #D1D2D3; line-height: 1.55; }
+  .slack-msg-text strong { color: #fff; }
+  .slack-artifact { margin-top: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid; border-radius: 0 8px 8px 0; padding: 10px 14px; }
+  .slack-artifact-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+  .slack-artifact-desc { font-size: 11px; color: #B5BAC1; }
+  .slack-reaction { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); font-size: 12px; margin-top: 6px; margin-right: 4px; }
+  .slack-reaction-count { font-size: 11px; color: #B5BAC1; }
+  .slack-divider { display: flex; align-items: center; gap: 10px; padding: 4px 0; }
+  .slack-divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+  .slack-divider-text { font-size: 11px; font-weight: 700; color: #B5BAC1; white-space: nowrap; }
+
+  /* Decision Path Live */
+  .dp-live { display: flex; flex-direction: column; gap: 14px; }
+  .dp-live-phase { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .dp-live-phase::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; }
+  .dp-live-phase.phase-done::before { background: var(--green); }
+  .dp-live-phase.phase-active::before { background: var(--accent); }
+  .dp-live-phase.phase-upcoming::before { background: rgba(148,163,184,0.2); }
+  .dp-live-phase.phase-done { border-color: rgba(16,185,129,0.2); }
+  .dp-live-phase.phase-active { border-color: rgba(14,165,233,0.3); box-shadow: 0 0 20px rgba(14,165,233,0.08); }
+  .dp-live-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .dp-live-badge { width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .dp-live-title { font-size: 15px; font-weight: 700; color: var(--text); }
+  .dp-live-status { margin-left: auto; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
+  .status-done { background: rgba(16,185,129,0.12); color: var(--green); }
+  .status-active { background: rgba(14,165,233,0.12); color: var(--accent); }
+  .status-upcoming { background: rgba(148,163,184,0.08); color: var(--text-muted); }
+  .dp-live-progress { height: 4px; background: rgba(148,163,184,0.1); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+  .dp-live-progress-bar { height: 100%; border-radius: 2px; transition: width 1s ease; }
+  .dp-live-tasks { display: flex; flex-direction: column; gap: 4px; }
+  .dp-live-task { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dim); padding: 3px 0; }
+  .dp-live-check { width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; }
+  .dp-live-check.done { border-color: var(--green); color: var(--green); background: rgba(16,185,129,0.08); }
+  .dp-live-check.active { border-color: var(--accent); color: var(--accent); background: rgba(14,165,233,0.08); }
+  .dp-live-check.pending { border-color: rgba(148,163,184,0.3); color: transparent; }
+  .dp-live-task.task-done { color: var(--text-muted); text-decoration: line-through; text-decoration-color: rgba(148,163,184,0.3); }
+  .dp-live-task.task-active { color: var(--text); font-weight: 500; }
+  .dp-live-timeline { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(148,163,184,0.06); }
+  .dp-live-timeline-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  @media (max-width: 768px) {
+    .motion-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -369,15 +716,113 @@
 <div class="nav">
   <div class="nav-brand">CLARI<span>OO</span></div>
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showSection(0)">1. The Chaos</button>
-    <button class="nav-tab" onclick="showSection(1)">2. Clarioo Unpacks</button>
-    <button class="nav-tab" onclick="showSection(2)">3. Decision Path</button>
-    <button class="nav-tab" onclick="showSection(3)">4. Clustered & Prioritised</button>
+    <button class="nav-tab active" onclick="showSection(0)">1. Capture</button>
+    <button class="nav-tab" onclick="showSection(1)">2. The Chaos</button>
+    <button class="nav-tab" onclick="showSection(2)">3. Clustered & Prioritised</button>
+    <button class="nav-tab" onclick="showSection(3)">4. Clarioo Unpacks</button>
+    <button class="nav-tab" onclick="showSection(4)">5. Decision Path</button>
+    <button class="nav-tab" onclick="showSection(5)">6. In Motion</button>
   </div>
 </div>
 
-<!-- ==================== SECTION 1: CHAOS ==================== -->
+<!-- ==================== SECTION 1: CAPTURE ==================== -->
 <div class="section active" id="sec0">
+  <div class="capture-container">
+    <div class="section-label">Where It All Starts</div>
+    <div class="section-title">A Request <span>Gets Captured</span></div>
+    <div class="section-desc">Every decision starts somewhere — a message, a meeting, an idea. Clarioo captures it the moment it happens, regardless of where it came from.</div>
+
+    <!-- Source pills -->
+    <div class="capture-source-row">
+      <div class="capture-source-pill active" style="background:rgba(139,92,246,0.1); border-color:rgba(139,92,246,0.3); color:#A78BFA;">
+        <span class="pill-dot" style="background:#A78BFA;"></span> Slack
+      </div>
+      <div class="capture-source-pill" style="background:rgba(251,146,60,0.08); border-color:rgba(251,146,60,0.2); color:#FB923C;">
+        <span class="pill-dot" style="background:#FB923C;"></span> Email
+      </div>
+      <div class="capture-source-pill" style="background:rgba(74,222,128,0.08); border-color:rgba(74,222,128,0.2); color:#4ADE80;">
+        <span class="pill-dot" style="background:#4ADE80;"></span> Meeting transcript
+      </div>
+      <div class="capture-source-pill" style="background:rgba(167,139,250,0.08); border-color:rgba(167,139,250,0.2); color:#A78BFA;">
+        <span class="pill-dot" style="background:#A78BFA;"></span> AI agent
+      </div>
+      <div class="capture-source-pill" style="background:rgba(96,165,250,0.08); border-color:rgba(96,165,250,0.2); color:#60A5FA;">
+        <span class="pill-dot" style="background:#60A5FA;"></span> Voice note
+      </div>
+    </div>
+
+    <!-- The raw request -->
+    <div class="capture-moment">
+      <div class="capture-source-tag" style="background:rgba(139,92,246,0.12); color:#A78BFA;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Slack · #finance-ops
+      </div>
+      <div class="capture-quote">"Can we explore using AI agents to improve our invoicing process? The current system is slow, error-prone, and our AP team is drowning."</div>
+      <div class="capture-meta">
+        <span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Ops Director → CFO
+        </span>
+        <span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Tuesday · 2:14 PM
+        </span>
+        <span style="color: var(--orange); font-weight:600;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Without Clarioo: lost in Slack, never actioned
+        </span>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="capture-arrow">
+      <div class="capture-arrow-line"></div>
+      <div class="capture-arrow-head">▼</div>
+    </div>
+
+    <!-- Clarioo capture log -->
+    <div class="capture-log">
+      <div class="capture-log-header">
+        <div class="capture-log-icon">C</div>
+        <div>
+          <div class="capture-log-title">Clarioo captured this request</div>
+          <div class="capture-log-sub">Tuesday 2:14 PM · Processed in &lt;2 seconds</div>
+        </div>
+      </div>
+      <div class="capture-log-rows">
+        <div class="capture-log-row">
+          <div class="capture-log-num">1</div>
+          <div class="capture-log-text"><strong>Request detected</strong> — Slack message in #finance-ops flagged as a change request. Ops Director → CFO conversation intercepted.</div>
+          <span class="capture-log-badge" style="background:rgba(16,185,129,0.1); color:var(--green);">Done</span>
+        </div>
+        <div class="capture-log-row">
+          <div class="capture-log-num">2</div>
+          <div class="capture-log-text"><strong>Intent extracted</strong> — "AP invoicing improvement" identified as core topic. Vague ask ("explore AI agents") separated from the real problem.</div>
+          <span class="capture-log-badge" style="background:rgba(16,185,129,0.1); color:var(--green);">Done</span>
+        </div>
+        <div class="capture-log-row">
+          <div class="capture-log-num">3</div>
+          <div class="capture-log-text"><strong>Prior context found</strong> — Finance team raised a similar request 3 months ago. AP error reports and meeting notes cross-referenced automatically.</div>
+          <span class="capture-log-badge" style="background:rgba(16,185,129,0.1); color:var(--green);">Done</span>
+        </div>
+        <div class="capture-log-row">
+          <div class="capture-log-num">4</div>
+          <div class="capture-log-text"><strong>Routed to intake queue</strong> — Added to this week's 28 open requests alongside requests from email, meetings, and other AI agents.</div>
+          <span class="capture-log-badge" style="background:rgba(14,165,233,0.1); color:var(--accent);">Queued</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="decision-next" onclick="showSection(1)">
+      <span>See This Request Alongside Everything Else This Week</span>
+      <span class="decision-next-arrow">&rarr;</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 2: CHAOS ==================== -->
+<div class="section" id="sec1">
   <div class="section-label">What Enterprises Deal With Every Week</div>
   <div class="section-title">28 Requests. <span>Zero Infrastructure.</span></div>
   <div class="section-desc">Real change requests flooding in from people, agents, meetings, and emails — across every function. Today, they live in Slack, inboxes, and people's heads.</div>
@@ -388,60 +833,183 @@
   </div>
 </div>
 
-<!-- ==================== SECTION 2: UNPACK ==================== -->
+<!-- ==================== SECTION 2: CLUSTERS ==================== -->
 <div class="section" id="sec1">
+  <div class="section-label">The System View</div>
+  <div class="section-title">28 Requests → <span>6 Decision Clusters</span></div>
+  <div class="section-desc">Clarioo automatically clusters related requests, detects duplicates, identifies dependencies, and surfaces what the organisation should focus on first.</div>
+
+  <!-- Heatmap Matrix -->
+  <div class="cluster-matrix-wrap">
+    <table class="cluster-matrix" id="clusterMatrix"></table>
+  </div>
+
+  <!-- Toggle -->
+  <div class="cluster-toggle">
+    <div class="cluster-toggle-inner">
+      <button class="cluster-toggle-btn active" onclick="setClusterView('process')">By Process Type</button>
+      <button class="cluster-toggle-btn" onclick="setClusterView('dept')">By Department</button>
+    </div>
+  </div>
+
+  <!-- Filter breadcrumb -->
+  <div class="filter-breadcrumb" id="filterBreadcrumb">
+    <div class="filter-pill">
+      <span id="filterLabel"></span>
+      <span class="filter-x" onclick="clearFilter()">✕</span>
+    </div>
+  </div>
+
+  <div class="clusters-container" id="clustersContainer"></div>
+  <div class="cluster-summary">
+    <h3>From 28 chaotic requests to 6 structured decision tracks</h3>
+    <p>Each cluster has a clear owner, evidence package, stakeholder map, and timeline. Decision memory captures everything for the future.</p>
+    <div class="cluster-stats">
+      <div class="cluster-stat"><div class="num" data-target="28">0</div><div class="label">Raw requests captured</div></div>
+      <div class="cluster-stat"><div class="num" data-target="6">0</div><div class="label">Decision clusters</div></div>
+      <div class="cluster-stat"><div class="num" data-target="4">0</div><div class="label">Duplicates merged</div></div>
+      <div class="cluster-stat"><div class="num" data-target="3">0</div><div class="label">Dependencies found</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 3: UNPACK ==================== -->
+<div class="section" id="sec2">
   <div class="unpack-container">
     <div class="section-label">How Clarioo Processes a Single Request</div>
     <div class="section-title">From Vague Intent to <span>Structured Understanding</span></div>
-    <div class="section-desc">Clarioo takes a raw request, unpacks the real intent, enriches it with context — and immediately shows how it connects to everything else in the system.</div>
+    <div class="section-desc">Clarioo takes a raw request, unpacks the real intent, maps the problem space — then connects it to everything else in the system.</div>
 
-    <div class="unpack-layout">
-      <!-- LEFT: Request Overview -->
-      <div>
-        <div class="original-request">
-          <h3>RAW REQUEST</h3>
-          <div class="quote">"We need to explore using AI agents to improve our invoicing process. The current system is slow, error-prone, and our AP team is drowning."</div>
-          <div class="meta">Source: Ops Director, via Slack message to CFO · Tuesday 2:14pm</div>
-        </div>
+    <!-- ===== Understanding the Need ===== -->
+    <div class="original-request">
+      <h3>RAW REQUEST</h3>
+      <div class="quote">"We need to explore using AI agents to improve our invoicing process. The current system is slow, error-prone, and our AP team is drowning."</div>
+      <div class="meta">Source: Ops Director, via Slack message to CFO · Tuesday 2:14pm</div>
+    </div>
 
-        <div class="unpack-step step-teal">
-          <h3>01 — UNDERSTAND</h3>
-          <h4>What's the real need behind this request?</h4>
-          <ul>
-            <li>Not just "AI agents" — the real pain is AP processing speed and error rate</li>
-            <li>Team of 4 processing ~800 invoices/month manually</li>
-            <li>Error rate: ~6% (industry avg: 1-2%)</li>
-            <li>Average processing time: 4.2 days (target: &lt;1 day)</li>
-          </ul>
-        </div>
+    <!-- Divider: Understanding -->
+    <div class="unpack-divider">
+      <div class="unpack-divider-line"></div>
+      <div class="unpack-divider-text">Clarioo unpacks the intent and gathers context</div>
+      <div class="unpack-divider-line"></div>
+    </div>
 
-        <div class="unpack-step step-cyan">
-          <h3>02 — CONTEXT</h3>
-          <h4>What exists today?</h4>
-          <ul>
-            <li>Current system: SAP + manual Excel reconciliation</li>
-            <li>ERP upgrade planned for Q3 (may affect integration)</li>
-            <li>Compliance requirement: SOX audit trail mandatory</li>
-            <li>Budget: Ops has $150K unallocated for automation initiatives</li>
-          </ul>
-        </div>
-
-        <div class="structured-output">
-          <h3>STRUCTURED DECISION CARD</h3>
-          <div class="output-field"><span class="output-label">Decision</span><span class="output-value teal">AP Invoice Automation</span></div>
-          <div class="output-field"><span class="output-label">Priority</span><span class="output-value high">High — $180K/yr manual cost, 6% error rate</span></div>
-          <div class="output-field"><span class="output-label">Complexity</span><span class="output-value medium">Medium — cross-functional, compliance-sensitive</span></div>
-          <div class="output-field"><span class="output-label">Cluster</span><span class="output-value teal">Process Automation (5 related requests)</span></div>
-          <div class="stakeholder-map">
-            <span class="stakeholder owner">CFO — Decision Owner</span>
-            <span class="stakeholder input">IT — Integration</span>
-            <span class="stakeholder input">AP Team Lead</span>
-            <span class="stakeholder approve">Compliance — SOX</span>
+    <!-- Evidence & Sources -->
+    <div class="evidence-panel">
+      <div class="evidence-title">Evidence & Sources</div>
+      <div class="evidence-grid">
+        <div class="evidence-item">
+          <div class="evidence-icon" style="background: rgba(139,92,246,0.12); color: #A78BFA;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           </div>
+          <div class="evidence-info">
+            <div class="evidence-name">Slack message to CFO</div>
+            <div class="evidence-meta">Ops Director · #finance-ops · Tue 2:14pm</div>
+          </div>
+          <span class="evidence-badge" style="background: rgba(139,92,246,0.1); color: #A78BFA;">Slack</span>
+        </div>
+        <div class="evidence-item">
+          <div class="evidence-icon" style="background: rgba(74,222,128,0.12); color: #4ADE80;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line></svg>
+          </div>
+          <div class="evidence-info">
+            <div class="evidence-name">Ops Weekly standup transcript</div>
+            <div class="evidence-meta">12 participants · Mon Mar 10 · 42 min</div>
+          </div>
+          <span class="evidence-badge" style="background: rgba(74,222,128,0.1); color: #4ADE80;">Transcript</span>
+        </div>
+        <div class="evidence-item">
+          <div class="evidence-icon" style="background: rgba(139,92,246,0.12); color: #A78BFA;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          </div>
+          <div class="evidence-info">
+            <div class="evidence-name">AI stakeholder interview — Finance team</div>
+            <div class="evidence-meta">4 participants · Feb 14 · 18 questions · AI-conducted</div>
+          </div>
+          <span class="evidence-badge" style="background: rgba(139,92,246,0.1); color: #A78BFA;">AI Interview</span>
+        </div>
+        <div class="evidence-item">
+          <div class="evidence-icon" style="background: rgba(14,165,233,0.12); color: #0EA5E9;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          </div>
+          <div class="evidence-info">
+            <div class="evidence-name">Finance Q4 automation proposal</div>
+            <div class="evidence-meta">Finance Director · Dec 2025 · archived</div>
+          </div>
+          <span class="evidence-badge" style="background: rgba(14,165,233,0.1); color: #0EA5E9;">Document</span>
+        </div>
+        <div class="evidence-item">
+          <div class="evidence-icon" style="background: rgba(245,158,11,0.12); color: #F59E0B;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          </div>
+          <div class="evidence-info">
+            <div class="evidence-name">Leadership offsite discussion</div>
+            <div class="evidence-meta">CFO + COO · Jan 22 · Meeting notes</div>
+          </div>
+          <span class="evidence-badge" style="background: rgba(245,158,11,0.1); color: #F59E0B;">Meeting</span>
+        </div>
+        <div class="evidence-item">
+          <div class="evidence-icon" style="background: rgba(239,68,68,0.12); color: #EF4444;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </div>
+          <div class="evidence-info">
+            <div class="evidence-name">AP error report — Q1 2026</div>
+            <div class="evidence-meta">AP Team Lead · 47 incidents flagged</div>
+          </div>
+          <span class="evidence-badge" style="background: rgba(239,68,68,0.1); color: #EF4444;">Report</span>
         </div>
       </div>
+    </div>
 
-      <!-- RIGHT: Connections -->
+    <!-- 3-column breakdown -->
+    <div class="unpack-trio">
+      <div class="unpack-step step-teal">
+        <h3>THE REAL PROBLEM</h3>
+        <h4>What's actually hurting?</h4>
+        <ul>
+          <li>Not "AI agents" — the pain is AP processing speed and error rate</li>
+          <li>Team of 4 processing ~800 invoices/month manually</li>
+          <li>Error rate: ~6% (industry avg: 1-2%)</li>
+          <li>Processing time: 4.2 days (target: &lt;1 day)</li>
+          <li>$180K/yr in manual labour cost</li>
+        </ul>
+      </div>
+
+      <div class="unpack-step step-cyan">
+        <h3>CURRENT STATE</h3>
+        <h4>What exists today?</h4>
+        <ul>
+          <li>SAP + manual Excel reconciliation</li>
+          <li>ERP upgrade planned for Q3</li>
+          <li>SOX audit trail mandatory</li>
+          <li>$150K unallocated for automation</li>
+          <li>Finance raised same issue 3 months ago</li>
+        </ul>
+      </div>
+
+      <div class="unpack-step step-green">
+        <h3>SUCCESS LOOKS LIKE</h3>
+        <h4>How do we know it's solved?</h4>
+        <ul>
+          <li>Processing time &lt;1 day (from 4.2)</li>
+          <li>Error rate &lt;2% (from 6%)</li>
+          <li>SOX compliance maintained</li>
+          <li>ROI within 12 months</li>
+          <li>AP team capacity freed for exceptions</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===== Divider: Bigger Picture ===== -->
+    <div class="unpack-divider">
+      <div class="unpack-divider-line"></div>
+      <div class="unpack-divider-text">Clarioo connects this to the bigger picture</div>
+      <div class="unpack-divider-line"></div>
+    </div>
+
+    <!-- ===== Connections + Decision Card ===== -->
+    <div class="unpack-part2">
+      <!-- LEFT: Connections -->
       <div class="connections-panel">
         <div class="conn-section">
           <div class="conn-section-title" style="color: var(--red);">
@@ -509,14 +1077,66 @@
           <div class="conn-stat-row"><span class="conn-stat-label">Stakeholder overlap</span><span class="conn-stat-value" style="color:var(--green);">CFO, IT, Compliance</span></div>
         </div>
       </div>
+
+      <!-- RIGHT: Structured Decision Card -->
+      <div class="decision-card-panel">
+        <div class="structured-output">
+          <h3>STRUCTURED DECISION CARD</h3>
+          <div class="output-field"><span class="output-label">Decision</span><span class="output-value teal">AP Invoice Automation</span></div>
+          <div class="output-field"><span class="output-label">Priority</span><span class="output-value high">High — $180K/yr cost, 6% error rate</span></div>
+          <div class="output-field"><span class="output-label">Complexity</span><span class="output-value medium">Medium — cross-functional, compliance</span></div>
+          <div class="output-field"><span class="output-label">Est. decision time</span><span class="output-value green">3 weeks (parallel input)</span></div>
+          <div class="output-field"><span class="output-label">Cluster</span><span class="output-value teal">Process Automation (5 related)</span></div>
+          <div class="output-field"><span class="output-label">Linked to</span><span class="output-value teal">ERP Upgrade (Q3) · Finance Roadmap</span></div>
+        </div>
+
+        <div class="decision-stakeholders">
+          <h4>STAKEHOLDER MAP</h4>
+          <div class="stake-role">
+            <div class="stake-role-label">Decision Owner</div>
+            <div class="stake-role-chips">
+              <span class="stakeholder owner">CFO</span>
+            </div>
+          </div>
+          <div class="stake-role">
+            <div class="stake-role-label">Input Required</div>
+            <div class="stake-role-chips">
+              <span class="stakeholder input">IT — Integration Review</span>
+              <span class="stakeholder input">AP Team Lead — Requirements</span>
+              <span class="stakeholder input">Ops Director — Requestor</span>
+            </div>
+          </div>
+          <div class="stake-role">
+            <div class="stake-role-label">Approval Gate</div>
+            <div class="stake-role-chips">
+              <span class="stakeholder approve">Compliance — SOX Audit</span>
+              <span class="stakeholder approve">CTO — if core system</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- ===== Divider: Suggested Decision Path ===== -->
+    <div class="unpack-divider">
+      <div class="unpack-divider-line"></div>
+      <div class="unpack-divider-text">Clarioo generates a suggested decision path</div>
+      <div class="unpack-divider-line"></div>
+    </div>
+
+    <!-- ===== Suggested Decision Path CTA (Step 5) ===== -->
+    <div class="decision-next" onclick="showSection(4)">
+      <span>View the Suggested Decision Path — 4 Phases, 3 Weeks</span>
+      <span class="decision-next-arrow">&rarr;</span>
+    </div>
+
   </div>
 </div>
 
-<!-- ==================== SECTION 3: DECISION PATH ==================== -->
-<div class="section" id="sec2">
+<!-- ==================== SECTION 4: DECISION PATH ==================== -->
+<div class="section" id="sec3">
   <div class="dp-container">
-    <div class="section-label">The Road to a Decision</div>
+    <div class="section-label">Suggested Decision Path</div>
     <div class="section-title">Structured <span>Decision Path</span></div>
     <div class="section-desc">Clarioo generates a clear, phased decision path — with owners, inputs needed, timelines, and what Clarioo will do at each step.</div>
 
@@ -842,30 +1462,291 @@
       </div>
     </div>
 
-    <div class="dp-outcome">
-      <h3>From 1 vague Slack message to a decision in 3 weeks</h3>
-      <p>Structured phases. Clear owners at every step. Evidence-based analysis. Full decision memory for the future.<br>Total stakeholder time: ~8 hours. Clarioo handles the rest.</p>
+    <!-- CTA to In Motion -->
+    <div class="decision-next" onclick="showSection(5)" style="margin-top: 32px;">
+      <span>Confirm Decision Path & See It In Motion</span>
+      <span class="decision-next-arrow">&rarr;</span>
     </div>
   </div>
 </div>
 
-<!-- ==================== SECTION 4: CLUSTERS ==================== -->
-<div class="section" id="sec3">
-  <div class="section-label">The System View</div>
-  <div class="section-title">28 Requests → <span>6 Decision Clusters</span></div>
-  <div class="section-desc">Clarioo automatically clusters related requests, detects duplicates, identifies dependencies, and surfaces what the organisation should focus on first.</div>
-  <div class="clusters-container" id="clustersContainer"></div>
-  <div class="cluster-summary">
-    <h3>From 28 chaotic requests to 6 structured decision tracks</h3>
-    <p>Each cluster has a clear owner, evidence package, stakeholder map, and timeline. Decision memory captures everything for the future.</p>
-    <div class="cluster-stats">
-      <div class="cluster-stat"><div class="num" data-target="28">0</div><div class="label">Raw requests captured</div></div>
-      <div class="cluster-stat"><div class="num" data-target="6">0</div><div class="label">Decision clusters</div></div>
-      <div class="cluster-stat"><div class="num" data-target="4">0</div><div class="label">Duplicates merged</div></div>
-      <div class="cluster-stat"><div class="num" data-target="3">0</div><div class="label">Dependencies found</div></div>
+<!-- ==================== SECTION 5: IN MOTION ==================== -->
+<div class="section" id="sec4">
+  <div class="motion-container">
+    <div class="section-label">Decision Path Confirmed — Now In Motion</div>
+    <div class="section-title">Clarioo <span>Drives the Process</span></div>
+    <div class="section-desc">The decision path is confirmed. Clarioo engages every stakeholder through Slack, produces artifacts, tracks progress, and keeps the decision moving — all in real time.</div>
+
+    <div class="motion-grid">
+      <!-- LEFT: Slack Mock -->
+      <div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:2px; color:var(--text-muted); text-transform:uppercase; margin-bottom:12px;">Team Communication</div>
+        <div class="slack-mock">
+          <!-- Slack top bar with window controls -->
+          <div class="slack-sidebar">
+            <div style="display:flex; align-items:center; gap:6px; margin-right:12px;">
+              <span style="width:12px;height:12px;border-radius:50%;background:#FF5F56;display:inline-block;"></span>
+              <span style="width:12px;height:12px;border-radius:50%;background:#FFBD2E;display:inline-block;"></span>
+              <span style="width:12px;height:12px;border-radius:50%;background:#27C93F;display:inline-block;"></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="18" height="18" viewBox="0 0 54 54" style="flex-shrink:0;">
+                <path d="M19.7 43.3a4.6 4.6 0 0 1-4.6-4.6v-4.6h4.6a4.6 4.6 0 0 1 0 9.2z" fill="#E01E5A"/>
+                <path d="M24.3 38.7a4.6 4.6 0 0 1-4.6-4.6V19.7a4.6 4.6 0 0 1 9.2 0v14.4a4.6 4.6 0 0 1-4.6 4.6z" fill="#E01E5A"/>
+                <path d="M10.7 24.3a4.6 4.6 0 0 1 4.6-4.6h4.6v4.6a4.6 4.6 0 0 1-9.2 0z" fill="#36C5F0"/>
+                <path d="M34.1 10.7a4.6 4.6 0 0 1 0 9.2H19.7a4.6 4.6 0 0 1 0-9.2z" fill="#36C5F0"/>
+                <path d="M34.1 24.3a4.6 4.6 0 0 1 4.6-4.6h4.6a4.6 4.6 0 0 1 0 9.2h-4.6a4.6 4.6 0 0 1-4.6-4.6z" fill="#2EB67D"/>
+                <path d="M29.7 38.7V19.7a4.6 4.6 0 0 1 9.2 0v14.4a4.6 4.6 0 0 1-9.2 0z" fill="#2EB67D"/>
+                <path d="M34.1 43.3a4.6 4.6 0 0 1 0-9.2h4.6v4.6a4.6 4.6 0 0 1-4.6 4.6z" fill="#ECB22E"/>
+                <path d="M10.7 34.1a4.6 4.6 0 0 1 9.2 0v4.6h-4.6a4.6 4.6 0 0 1-4.6-4.6z" fill="#ECB22E"/>
+              </svg>
+              <div class="slack-sidebar-name">Acme Corp</div>
+            </div>
+          </div>
+          <div class="slack-channel-bar">
+            <span class="slack-hash">#</span>
+            <span class="slack-channel-name">ap-automation-decision</span>
+            <span class="slack-channel-desc">
+              <span style="display:inline-flex; align-items:center; gap:4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.6;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                6 members
+              </span>
+            </span>
+          </div>
+          <div class="slack-messages">
+            <!-- Clarioo kickoff -->
+            <div class="slack-msg">
+              <div class="slack-avatar" style="background: linear-gradient(135deg, #0EA5E9, #06B6D4); border-radius: 8px;">C</div>
+              <div class="slack-msg-body">
+                <div class="slack-msg-header">
+                  <span class="slack-msg-name">Clarioo</span>
+                  <span class="slack-msg-badge" style="background:rgba(46,182,125,0.15); color:#2EB67D;">APP</span>
+                  <span class="slack-msg-time">Mon 9:02 AM</span>
+                </div>
+                <div class="slack-msg-text">
+                  <strong>Decision path confirmed: AP Invoice Automation</strong><br>
+                  I've set up this channel to coordinate the decision. Here's where we are:
+                </div>
+                <div class="slack-artifact" style="border-left-color: #36C5F0;">
+                  <div class="slack-artifact-title" style="color: #36C5F0;">Decision Brief — AP Invoice Automation</div>
+                  <div class="slack-artifact-desc">Problem statement, success criteria, budget envelope, and timeline. 4 phases, 3 weeks.</div>
+                </div>
+                <span class="slack-reaction">&#128077; <span class="slack-reaction-count">3</span></span>
+                <span class="slack-reaction">&#9989; <span class="slack-reaction-count">2</span></span>
+              </div>
+            </div>
+
+            <!-- Clarioo data request -->
+            <div class="slack-msg">
+              <div class="slack-avatar" style="background: linear-gradient(135deg, #0EA5E9, #06B6D4); border-radius: 8px;">C</div>
+              <div class="slack-msg-body">
+                <div class="slack-msg-header">
+                  <span class="slack-msg-name">Clarioo</span>
+                  <span class="slack-msg-badge" style="background:rgba(46,182,125,0.15); color:#2EB67D;">APP</span>
+                  <span class="slack-msg-time">Mon 9:05 AM</span>
+                </div>
+                <div class="slack-msg-text">
+                  <strong>Phase 0 — Scope & Align</strong><br>
+                  I need input from a few of you to lock scope:
+                </div>
+                <div class="slack-artifact" style="border-left-color: #2EB67D;">
+                  <div class="slack-artifact-title" style="color: #2EB67D;">Data Request &#8594; AP Team Lead</div>
+                  <div class="slack-artifact-desc">Invoice volumes, error breakdown, time-per-invoice, top 5 pain points. Template attached.</div>
+                </div>
+                <div class="slack-artifact" style="border-left-color: #ECB22E;">
+                  <div class="slack-artifact-title" style="color: #ECB22E;">Data Request &#8594; IT</div>
+                  <div class="slack-artifact-desc">SAP integration points, API availability, security requirements, ERP upgrade timeline.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stakeholder response -->
+            <div class="slack-msg">
+              <div class="slack-avatar" style="background: #E01E5A; border-radius: 8px;">SC</div>
+              <div class="slack-msg-body">
+                <div class="slack-msg-header">
+                  <span class="slack-msg-name">Sarah Chen</span>
+                  <span class="slack-msg-time">Mon 2:30 PM</span>
+                </div>
+                <div class="slack-msg-text">Filled in the template. We processed 847 invoices last month — error rate was actually 7.2%, higher than we thought. Biggest issue is the 3-way match step.</div>
+                <span class="slack-reaction">&#128064; <span class="slack-reaction-count">2</span></span>
+              </div>
+            </div>
+
+            <div class="slack-divider">
+              <div class="slack-divider-line"></div>
+              <div class="slack-divider-text">Tuesday</div>
+              <div class="slack-divider-line"></div>
+            </div>
+
+            <!-- Clarioo update -->
+            <div class="slack-msg">
+              <div class="slack-avatar" style="background: linear-gradient(135deg, #0EA5E9, #06B6D4); border-radius: 8px;">C</div>
+              <div class="slack-msg-body">
+                <div class="slack-msg-header">
+                  <span class="slack-msg-name">Clarioo</span>
+                  <span class="slack-msg-badge" style="background:rgba(46,182,125,0.15); color:#2EB67D;">APP</span>
+                  <span class="slack-msg-time">Tue 10:15 AM</span>
+                </div>
+                <div class="slack-msg-text">
+                  <strong>Phase 0 complete &#9989;</strong> — scope locked. Updated the decision brief with Sarah's data. Moving to Phase 1.
+                </div>
+                <div class="slack-artifact" style="border-left-color: #8B5CF6;">
+                  <div class="slack-artifact-title" style="color: #8B5CF6;">Vendor Landscape Report (draft)</div>
+                  <div class="slack-artifact-desc">Market scan: 8 vendors evaluated. Stampli, Tipalti, and Medius shortlisted. Comparison matrix inside.</div>
+                </div>
+                <span class="slack-reaction">&#128640; <span class="slack-reaction-count">4</span></span>
+              </div>
+            </div>
+
+            <!-- IT response -->
+            <div class="slack-msg">
+              <div class="slack-avatar" style="background: #36C5F0; border-radius: 8px;">MW</div>
+              <div class="slack-msg-body">
+                <div class="slack-msg-header">
+                  <span class="slack-msg-name">Marcus Webb</span>
+                  <span class="slack-msg-time">Tue 3:45 PM</span>
+                </div>
+                <div class="slack-msg-text">Integration review done. SAP has REST APIs for the modules we need. One concern: the Q3 ERP upgrade changes the GL posting module — any vendor needs to handle the migration.</div>
+                <span class="slack-reaction">&#128172; <span class="slack-reaction-count">1</span></span>
+              </div>
+            </div>
+
+            <div class="slack-divider">
+              <div class="slack-divider-line"></div>
+              <div class="slack-divider-text">Wednesday</div>
+              <div class="slack-divider-line"></div>
+            </div>
+
+            <!-- Clarioo artifact -->
+            <div class="slack-msg">
+              <div class="slack-avatar" style="background: linear-gradient(135deg, #0EA5E9, #06B6D4); border-radius: 8px;">C</div>
+              <div class="slack-msg-body">
+                <div class="slack-msg-header">
+                  <span class="slack-msg-name">Clarioo</span>
+                  <span class="slack-msg-badge" style="background:rgba(46,182,125,0.15); color:#2EB67D;">APP</span>
+                  <span class="slack-msg-time">Wed 9:00 AM</span>
+                </div>
+                <div class="slack-msg-text">
+                  <strong>&#128202; Week 1 summary</strong> — all Phase 1 inputs collected. Evidence package ready for review.
+                </div>
+                <div class="slack-artifact" style="border-left-color: #36C5F0;">
+                  <div class="slack-artifact-title" style="color: #36C5F0;">Evidence Package — AP Automation</div>
+                  <div class="slack-artifact-desc">Current state analysis, vendor comparison (3 shortlisted), integration assessment, compliance checklist, TCO model draft.</div>
+                </div>
+                <div class="slack-artifact" style="border-left-color: #ECB22E;">
+                  <div class="slack-artifact-title" style="color: #ECB22E;">Stakeholder Scoring — Ready to Vote</div>
+                  <div class="slack-artifact-desc">CFO, CTO, IT Lead, AP Team Lead — please score the 3 shortlisted options by Friday.</div>
+                </div>
+                <span class="slack-reaction">&#9989; <span class="slack-reaction-count">3</span></span>
+                <span class="slack-reaction">&#128588; <span class="slack-reaction-count">2</span></span>
+              </div>
+            </div>
+
+          </div>
+          <!-- Slack message input -->
+          <div style="padding:10px 18px 14px; border-top:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:10px;">
+            <div style="flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:10px 14px; font-size:13px; color:#616061;">Message #ap-automation-decision</div>
+            <div style="width:32px; height:32px; border-radius:8px; background:rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#616061" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Decision Path Live Progress -->
+      <div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:2px; color:var(--text-muted); text-transform:uppercase; margin-bottom:12px;">Decision Progress</div>
+        <div class="dp-live">
+          <!-- Phase 0: Done -->
+          <div class="dp-live-phase phase-done">
+            <div class="dp-live-header">
+              <div class="dp-live-badge phase-bg-teal">0</div>
+              <div class="dp-live-title">Scope & Align</div>
+              <span class="dp-live-status status-done">Completed</span>
+            </div>
+            <div class="dp-live-progress"><div class="dp-live-progress-bar" style="width:100%; background: var(--green);"></div></div>
+            <div class="dp-live-tasks">
+              <div class="dp-live-task task-done"><span class="dp-live-check done">&#10003;</span>Confirm problem statement</div>
+              <div class="dp-live-task task-done"><span class="dp-live-check done">&#10003;</span>Define success criteria</div>
+              <div class="dp-live-task task-done"><span class="dp-live-check done">&#10003;</span>Confirm budget &amp; timeline</div>
+            </div>
+            <div class="dp-live-timeline">
+              <span class="dp-live-timeline-dot" style="background: var(--green);"></span>
+              Completed in 2 days &middot; 1.5 hrs stakeholder time
+            </div>
+          </div>
+
+          <!-- Phase 1: Active -->
+          <div class="dp-live-phase phase-active">
+            <div class="dp-live-header">
+              <div class="dp-live-badge phase-bg-green">1</div>
+              <div class="dp-live-title">Gather Evidence</div>
+              <span class="dp-live-status status-active">In Progress — Day 4 of 7</span>
+            </div>
+            <div class="dp-live-progress"><div class="dp-live-progress-bar" style="width:65%; background: var(--accent);"></div></div>
+            <div class="dp-live-tasks">
+              <div class="dp-live-task task-done"><span class="dp-live-check done">&#10003;</span>Quantify current state pain</div>
+              <div class="dp-live-task task-done"><span class="dp-live-check done">&#10003;</span>Document integration requirements</div>
+              <div class="dp-live-task task-done"><span class="dp-live-check done">&#10003;</span>Vendor landscape scan (8 evaluated)</div>
+              <div class="dp-live-task task-active"><span class="dp-live-check active">&#9679;</span>Compliance requirements — awaiting Legal</div>
+              <div class="dp-live-task"><span class="dp-live-check pending"></span>Map ERP upgrade impact</div>
+            </div>
+            <div class="dp-live-timeline">
+              <span class="dp-live-timeline-dot" style="background: var(--accent);"></span>
+              3 of 5 inputs collected &middot; 2 pending &middot; Est. complete: Friday
+            </div>
+          </div>
+
+          <!-- Phase 2: Upcoming -->
+          <div class="dp-live-phase phase-upcoming">
+            <div class="dp-live-header">
+              <div class="dp-live-badge phase-bg-orange">2</div>
+              <div class="dp-live-title">Analyse Options</div>
+              <span class="dp-live-status status-upcoming">Starts Week 2</span>
+            </div>
+            <div class="dp-live-progress"><div class="dp-live-progress-bar" style="width:0%; background: var(--orange);"></div></div>
+            <div class="dp-live-tasks">
+              <div class="dp-live-task"><span class="dp-live-check pending"></span>Score options against requirements</div>
+              <div class="dp-live-task"><span class="dp-live-check pending"></span>Build TCO comparison (3-year)</div>
+              <div class="dp-live-task"><span class="dp-live-check pending"></span>Risk assessment per option</div>
+              <div class="dp-live-task"><span class="dp-live-check pending"></span>Stakeholder scoring &amp; vote</div>
+            </div>
+            <div class="dp-live-timeline">
+              <span class="dp-live-timeline-dot" style="background: rgba(148,163,184,0.3);"></span>
+              Scheduled: Week 2 &middot; 2-3 hrs stakeholder time
+            </div>
+          </div>
+
+          <!-- Phase 3: Upcoming -->
+          <div class="dp-live-phase phase-upcoming">
+            <div class="dp-live-header">
+              <div class="dp-live-badge phase-bg-purple">3</div>
+              <div class="dp-live-title">Decision & Next Steps</div>
+              <span class="dp-live-status status-upcoming">Starts Week 3</span>
+            </div>
+            <div class="dp-live-progress"><div class="dp-live-progress-bar" style="width:0%; background: var(--purple);"></div></div>
+            <div class="dp-live-tasks">
+              <div class="dp-live-task"><span class="dp-live-check pending"></span>Review recommendation brief</div>
+              <div class="dp-live-task"><span class="dp-live-check pending"></span>Decision meeting (CFO + CTO)</div>
+              <div class="dp-live-task"><span class="dp-live-check pending"></span>Document decision &amp; rationale</div>
+            </div>
+            <div class="dp-live-timeline">
+              <span class="dp-live-timeline-dot" style="background: rgba(148,163,184,0.3);"></span>
+              Scheduled: Week 3 &middot; 1 hr decision meeting
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dp-outcome" style="margin-top: 40px;">
+      <h3>Clarioo keeps everything moving — so decisions don't stall</h3>
+      <p>Every artifact is produced. Every stakeholder is engaged. Every blocker is surfaced.<br>Total stakeholder time so far: ~3 hours. Clarioo and other agents handle the rest.</p>
     </div>
   </div>
 </div>
+
 
 <script>
 // ===== DATA =====
@@ -914,79 +1795,259 @@ requests.forEach((r, i) => {
     <div class="request-text">${r.text}</div>
     <div class="request-tags">${r.tags.map(t => '<span class="request-tag">' + t + '</span>').join('')}</div>
   `;
-  if (i === 1) card.onclick = () => showSection(1);
+  if (i === 1) card.onclick = () => showSection(3);
   grid.appendChild(card);
 });
 
-// Render clusters
+// ===== CLUSTER DATA (with dept per item) =====
 const clusters = [
   { name: "Process Automation", color: "#0EA5E9", items: [
-    { text: "AI agents for invoicing", priority: "high" },
-    { text: "Automate applicant tracking", priority: "medium" },
-    { text: "Automate onboarding workflow", priority: "medium" },
-    { text: "RPA tools for accounts payable", priority: "high" },
-    { text: "AI chatbot for IT helpdesk", priority: "medium" },
-    { text: "Automate NDA review (Legal)", priority: "low" },
+    { text: "AI agents for invoicing", priority: "high", dept: "Operations", highlight: true },
+    { text: "Automate applicant tracking", priority: "medium", dept: "HR" },
+    { text: "Automate onboarding workflow", priority: "medium", dept: "HR" },
+    { text: "RPA tools for accounts payable", priority: "high", dept: "Operations" },
+    { text: "AI chatbot for IT helpdesk", priority: "medium", dept: "IT" },
+    { text: "Automate NDA review (Legal)", priority: "low", dept: "Legal" },
   ], deps: "Linked to: ERP Upgrade, AI Adoption", est: "~4 weeks" },
   { name: "Vendor Consolidation", color: "#F59E0B", items: [
-    { text: "4 overlapping SaaS in marketing", priority: "critical" },
-    { text: "3 different PM tools across teams", priority: "high" },
-    { text: "Consolidate cloud storage providers", priority: "medium" },
-    { text: "Tableau vs Google Sheets overlap", priority: "medium" },
-    { text: "Slack vs Teams evaluation", priority: "low" },
-    { text: "Merge 2 CRM instances", priority: "high" },
+    { text: "4 overlapping SaaS in marketing", priority: "critical", dept: "Marketing" },
+    { text: "3 different PM tools across teams", priority: "high", dept: "IT" },
+    { text: "Consolidate cloud storage providers", priority: "medium", dept: "IT" },
+    { text: "Tableau vs Google Sheets overlap", priority: "medium", dept: "Finance" },
+    { text: "Slack vs Teams evaluation", priority: "low", dept: "IT" },
+    { text: "Merge 2 CRM instances", priority: "high", dept: "Sales" },
   ], deps: "Linked to: Cost Optimisation", est: "~6 weeks" },
   { name: "Vendor Selection (Urgent)", color: "#EF4444", items: [
-    { text: "Cybersecurity vendor — 60 days to contract expiry", priority: "critical" },
-    { text: "Testing framework blocking releases", priority: "critical" },
-    { text: "Penetration testing vendor (annual)", priority: "high" },
+    { text: "Cybersecurity vendor — 60 days to contract expiry", priority: "critical", dept: "Security" },
+    { text: "Testing framework blocking releases", priority: "critical", dept: "Engineering" },
+    { text: "Penetration testing vendor (annual)", priority: "high", dept: "Security" },
   ], deps: "Time-sensitive: contract deadlines", est: "~2 weeks" },
   { name: "Build vs. Buy Decisions", color: "#10B981", items: [
-    { text: "Build analytics dashboard vs Looker", priority: "medium" },
-    { text: "Outsource payroll vs keep in-house", priority: "medium" },
-    { text: "Hire 2 SDRs vs outbound automation", priority: "high" },
+    { text: "Build analytics dashboard vs Looker", priority: "medium", dept: "Data" },
+    { text: "Outsource payroll vs keep in-house", priority: "medium", dept: "Finance" },
+    { text: "Hire 2 SDRs vs outbound automation", priority: "high", dept: "Sales" },
   ], deps: "Linked to: Budget Allocation Q3", est: "~3 weeks" },
   { name: "AI & Agent Adoption", color: "#8B5CF6", items: [
-    { text: "Adopt Copilot across the org", priority: "high" },
-    { text: "CDP platform for marketing", priority: "medium" },
-    { text: "Jenkins to GitHub Actions migration", priority: "low" },
+    { text: "Adopt Copilot across the org", priority: "high", dept: "IT" },
+    { text: "CDP platform for marketing", priority: "medium", dept: "Marketing" },
+    { text: "Jenkins to GitHub Actions migration", priority: "low", dept: "Engineering" },
   ], deps: "Linked to: Process Automation cluster", est: "~4 weeks" },
   { name: "Cost Optimisation & Waste", color: "#06B6D4", items: [
-    { text: "CRM too expensive — evaluate alternatives", priority: "high" },
-    { text: "Data warehouse costs tripled", priority: "high" },
-    { text: "Compliance platform unused 6 months", priority: "low" },
-    { text: "Legacy ERP inventory module", priority: "medium" },
+    { text: "CRM too expensive — evaluate alternatives", priority: "high", dept: "Sales" },
+    { text: "Data warehouse costs tripled", priority: "high", dept: "Data" },
+    { text: "Compliance platform unused 6 months", priority: "low", dept: "Security" },
+    { text: "Legacy ERP inventory module", priority: "medium", dept: "Supply Chain" },
   ], deps: "Linked to: Vendor Consolidation", est: "~3 weeks" },
 ];
 
-const cc = document.getElementById('clustersContainer');
-clusters.forEach((cl, idx) => {
-  const div = document.createElement('div');
-  div.className = 'cluster-group';
-  div.style.cssText = '--cluster-color: ' + cl.color;
-  div.innerHTML = `
-    <div class="cluster-title">
-      <div class="cluster-dot" style="background:${cl.color}; box-shadow: 0 0 10px ${cl.color}40"></div>
-      <div class="cluster-name">${cl.name}</div>
-      <div class="cluster-count">${cl.items.length} requests</div>
-    </div>
-    <div class="cluster-items">
-      ${cl.items.map(it => `<div class="cluster-item"><span>${it.text}</span><span class="priority ${it.priority}">${it.priority.toUpperCase()}</span></div>`).join('')}
-    </div>
-    <div class="cluster-meta">
-      <span>&#9201; ${cl.est}</span>
-      <span>&#128279; ${cl.deps}</span>
-    </div>
-  `;
-  cc.appendChild(div);
+// Build flat items list with both dimensions
+const allItems = [];
+clusters.forEach(cl => {
+  cl.items.forEach(it => {
+    allItems.push({ ...it, cluster: cl.name, clusterColor: cl.color });
+  });
 });
+
+// Department colors
+const deptColors = {
+  "IT": "#0EA5E9", "Operations": "#F59E0B", "HR": "#10B981", "Finance": "#06B6D4",
+  "Sales": "#EF4444", "Legal": "#8B5CF6", "Security": "#F43F5E", "Data": "#6366F1",
+  "Engineering": "#A78BFA", "Marketing": "#FB923C", "Supply Chain": "#94A3B8"
+};
+
+// Department order
+const deptOrder = ["IT","Operations","HR","Finance","Sales","Legal","Security","Data","Engineering","Marketing","Supply Chain"];
+
+// Build department clusters
+function buildDeptClusters() {
+  const map = {};
+  allItems.forEach(it => {
+    const d = it.dept;
+    if (!map[d]) map[d] = { name: d, color: deptColors[d] || '#94A3B8', items: [] };
+    map[d].items.push(it);
+  });
+  return deptOrder.filter(d => map[d]).map(d => map[d]);
+}
+
+// ===== HEATMAP MATRIX =====
+function buildMatrix() {
+  const table = document.getElementById('clusterMatrix');
+  const clusterNames = clusters.map(c => c.name);
+  const depts = deptOrder.filter(d => allItems.some(it => it.dept === d));
+
+  // Count matrix
+  const counts = {};
+  allItems.forEach(it => {
+    const key = it.dept + '||' + it.cluster;
+    counts[key] = (counts[key] || 0) + 1;
+  });
+
+  // Header row
+  let html = '<thead><tr><th class="matrix-row-header"></th>';
+  clusterNames.forEach(cn => {
+    const short = cn.replace('Process ','').replace('Vendor ','V. ').replace(' (Urgent)','*').replace('Build vs. Buy ','B/B').replace(' & Agent','').replace(' & Waste','');
+    html += `<th>${short}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  // Data rows
+  depts.forEach(dept => {
+    html += `<tr><th class="matrix-row-header">${dept}</th>`;
+    clusterNames.forEach(cn => {
+      const key = dept + '||' + cn;
+      const count = counts[key] || 0;
+      const hasHighlight = allItems.some(it => it.dept === dept && it.cluster === cn && it.highlight);
+      const cClass = count === 0 ? '' : count === 1 ? 'has-items c1' : count === 2 ? 'has-items c2' : 'has-items c3';
+      html += `<td class="matrix-cell ${cClass}${hasHighlight ? ' has-highlight' : ''}"
+        data-dept="${dept}" data-cluster="${cn}" data-count="${count}"
+        ${count > 0 ? `onclick="filterByCell('${dept}','${cn}')" onmouseenter="highlightCell('${dept}','${cn}')" onmouseleave="clearHighlight()"` : ''}
+      >${count || ''}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  table.innerHTML = html;
+}
+
+// ===== CLUSTER RENDERING =====
+let currentView = 'process';
+let currentFilter = null;
+
+function renderClusters(mode, filter) {
+  const cc = document.getElementById('clustersContainer');
+  cc.style.opacity = '0';
+  cc.style.transform = 'translateY(10px)';
+
+  setTimeout(() => {
+    cc.innerHTML = '';
+    const data = mode === 'process' ? clusters : buildDeptClusters();
+    const crossLabel = mode === 'process' ? 'dept' : 'cluster';
+
+    data.forEach((cl, idx) => {
+      // Filter: skip groups with no matching items
+      let items = cl.items;
+      if (filter) {
+        items = items.filter(it => {
+          if (filter.dept && filter.cluster) return it.dept === filter.dept && (it.cluster === filter.cluster || cl.name === filter.cluster);
+          if (filter.dept) return it.dept === filter.dept || cl.name === filter.dept;
+          if (filter.cluster) return it.cluster === filter.cluster || cl.name === filter.cluster;
+          return true;
+        });
+        if (items.length === 0) return;
+      }
+
+      const div = document.createElement('div');
+      div.className = 'cluster-group';
+      div.style.cssText = '--cluster-color: ' + cl.color;
+      div.setAttribute('data-cluster', cl.name);
+
+      const crossRefColor = mode === 'process' ? deptColors : {};
+      div.innerHTML = `
+        <div class="cluster-title">
+          <div class="cluster-dot" style="background:${cl.color}; box-shadow: 0 0 10px ${cl.color}40"></div>
+          <div class="cluster-name">${cl.name}</div>
+          <div class="cluster-count">${items.length} request${items.length !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="cluster-items">
+          ${items.map(it => {
+            const isHL = it.highlight;
+            const refText = mode === 'process' ? it.dept : it.cluster;
+            const refColor = mode === 'process' ? (deptColors[it.dept] || '#94A3B8') : (clusters.find(c => c.name === it.cluster)?.color || '#94A3B8');
+            return `<div class="cluster-item${isHL ? ' highlighted-item' : ''}" data-dept="${it.dept}" data-cluster="${it.cluster || cl.name}"${isHL ? ' onclick="showSection(3)"' : ''}>
+              <span>${it.text}</span>
+              <span class="item-cross-ref" style="background:${refColor}15; color:${refColor}">${refText}</span>
+              <span class="priority ${it.priority}">${it.priority.toUpperCase()}</span>
+            </div>`;
+          }).join('')}
+        </div>
+        ${!filter && cl.deps ? `<div class="cluster-meta"><span>&#9201; ${cl.est}</span><span>&#128279; ${cl.deps}</span></div>` : ''}
+      `;
+      cc.appendChild(div);
+    });
+
+    cc.style.transition = 'opacity 0.3s, transform 0.3s';
+    cc.style.opacity = '1';
+    cc.style.transform = 'translateY(0)';
+  }, 150);
+}
+
+function setClusterView(mode) {
+  currentView = mode;
+  currentFilter = null;
+  clearFilter();
+  document.querySelectorAll('.cluster-toggle-btn').forEach(b => {
+    b.classList.toggle('active', (mode === 'process' && b.textContent.includes('Process')) || (mode === 'dept' && b.textContent.includes('Department')));
+  });
+
+  // Update section title
+  const titleEl = document.querySelector('#sec1 .section-title');
+  if (mode === 'process') {
+    titleEl.innerHTML = '28 Requests → <span>6 Decision Clusters</span>';
+  } else {
+    const deptCount = buildDeptClusters().length;
+    titleEl.innerHTML = '28 Requests → <span>' + deptCount + ' Departments</span>';
+  }
+
+  renderClusters(mode, null);
+}
+
+// ===== MATRIX INTERACTIONS =====
+function filterByCell(dept, cluster) {
+  currentFilter = { dept, cluster };
+  const label = document.getElementById('filterLabel');
+  label.textContent = dept + ' × ' + cluster;
+  document.getElementById('filterBreadcrumb').classList.add('active');
+
+  // Highlight active cell
+  document.querySelectorAll('.matrix-cell').forEach(c => c.classList.remove('active-cell'));
+  document.querySelector(`.matrix-cell[data-dept="${dept}"][data-cluster="${cluster}"]`)?.classList.add('active-cell');
+
+  renderClusters(currentView, currentFilter);
+}
+
+function clearFilter() {
+  currentFilter = null;
+  document.getElementById('filterBreadcrumb').classList.remove('active');
+  document.querySelectorAll('.matrix-cell').forEach(c => c.classList.remove('active-cell'));
+  renderClusters(currentView, null);
+}
+
+function highlightCell(dept, cluster) {
+  document.querySelectorAll('.cluster-item').forEach(el => {
+    const d = el.getAttribute('data-dept');
+    const c = el.getAttribute('data-cluster');
+    if (d === dept && c === cluster) {
+      el.style.borderColor = 'var(--accent)';
+      el.style.background = 'rgba(14,165,233,0.08)';
+    } else {
+      el.classList.add('dimmed');
+    }
+  });
+  document.querySelectorAll('.cluster-group').forEach(g => {
+    const hasMatch = g.querySelector(`.cluster-item[data-dept="${dept}"][data-cluster="${cluster}"]`);
+    if (!hasMatch) g.classList.add('dimmed');
+  });
+}
+
+function clearHighlight() {
+  document.querySelectorAll('.cluster-item').forEach(el => {
+    el.classList.remove('dimmed');
+    el.style.borderColor = '';
+    el.style.background = '';
+  });
+  document.querySelectorAll('.cluster-group').forEach(g => g.classList.remove('dimmed'));
+}
+
+// ===== INIT CLUSTERS =====
+buildMatrix();
+renderClusters('process', null);
 
 // ===== NAVIGATION =====
 function showSection(idx) {
   document.querySelectorAll('.section').forEach((s, i) => s.classList.toggle('active', i === idx));
   document.querySelectorAll('.nav-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (idx === 3) setTimeout(animateCounters, 400);
+  if (idx === 2) setTimeout(animateCounters, 400);
 }
 
 // ===== DECISION PATH INTERACTIONS =====
@@ -998,8 +2059,7 @@ function togglePhase(header) {
 function scrollToPhase(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  const card = el;
-  if (!card.classList.contains('open')) card.classList.add('open');
+  if (!el.classList.contains('open')) el.classList.add('open');
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
