@@ -5,124 +5,365 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clarioo — From Chaos to Clarity</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #0B1221;
+    --surface: #131D2F;
+    --surface2: #182742;
+    --border: rgba(14,165,233,0.1);
+    --border-hover: rgba(14,165,233,0.35);
+    --text: #E2E8F0;
+    --text-dim: #94A3B8;
+    --text-muted: #64748B;
+    --accent: #0EA5E9;
+    --accent-glow: rgba(14,165,233,0.25);
+    --green: #10B981;
+    --orange: #F59E0B;
+    --red: #EF4444;
+    --purple: #8B5CF6;
+    --cyan: #06B6D4;
+    --indigo: #6366F1;
+  }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Inter', sans-serif; background: #0F1B2D; color: #E2E8F0; overflow-x: hidden; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+
+  /* AMBIENT */
+  .ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .ambient .orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.06; animation: drift 20s ease-in-out infinite alternate; }
+  .ambient .orb:nth-child(1) { width: 600px; height: 600px; background: var(--accent); top: -10%; left: -5%; }
+  .ambient .orb:nth-child(2) { width: 500px; height: 500px; background: var(--purple); bottom: -10%; right: -5%; animation-delay: -7s; }
+  .ambient .orb:nth-child(3) { width: 400px; height: 400px; background: var(--cyan); top: 40%; left: 50%; animation-delay: -14s; }
+  @keyframes drift { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,-20px) scale(1.05); } 100% { transform: translate(-20px,30px) scale(0.95); } }
 
   /* NAV */
-  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15,27,45,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(14,165,233,0.15); padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; }
-  .nav-brand { font-size: 18px; font-weight: 800; letter-spacing: 4px; color: #fff; }
-  .nav-brand span { color: #0EA5E9; }
-  .nav-tabs { display: flex; gap: 4px; }
-  .nav-tab { padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s; color: #94A3B8; background: transparent; border: none; }
-  .nav-tab:hover { color: #E2E8F0; background: rgba(14,165,233,0.1); }
-  .nav-tab.active { color: #fff; background: #0EA5E9; }
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(11,18,33,0.88); backdrop-filter: blur(20px) saturate(1.4);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px; height: 64px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-brand { font-size: 20px; font-weight: 900; letter-spacing: 5px; color: #fff; }
+  .nav-brand span { background: linear-gradient(135deg, var(--accent), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-tabs { display: flex; gap: 4px; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 4px; }
+  .nav-tab {
+    padding: 8px 18px; border-radius: 8px; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all 0.3s; color: var(--text-muted);
+    background: transparent; border: none; white-space: nowrap;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: #fff; background: linear-gradient(135deg, var(--accent), #0284C7); box-shadow: 0 2px 12px var(--accent-glow); }
 
   /* SECTIONS */
-  .section { display: none; min-height: 100vh; padding: 80px 40px 40px; }
-  .section.active { display: block; }
+  .section { display: none; min-height: 100vh; padding: 100px 40px 60px; position: relative; z-index: 1; }
+  .section.active { display: block; animation: fadeUp 0.45s ease-out; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* SECTION 1: CHAOS */
-  .chaos-header { text-align: center; margin-bottom: 40px; }
-  .chaos-header h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
-  .chaos-header h1 span { color: #0EA5E9; }
-  .chaos-header p { color: #64748B; font-size: 16px; max-width: 700px; margin: 0 auto; }
-  .chaos-subtitle { text-align: center; color: #F59E0B; font-size: 13px; font-weight: 600; letter-spacing: 2px; margin-bottom: 8px; }
+  /* HEADERS */
+  .section-label { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--orange); margin-bottom: 12px; text-transform: uppercase; }
+  .section-title { text-align: center; font-size: 40px; font-weight: 900; line-height: 1.2; margin-bottom: 10px; letter-spacing: -0.5px; }
+  .section-title span { background: linear-gradient(135deg, var(--accent), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .section-desc { text-align: center; color: var(--text-muted); font-size: 15px; max-width: 680px; margin: 0 auto 44px; line-height: 1.7; }
 
-  .requests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; max-width: 1200px; margin: 0 auto; }
-  .request-card { background: #162640; border: 1px solid rgba(14,165,233,0.12); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
-  .request-card:hover { border-color: #0EA5E9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,165,233,0.15); }
-  .request-card.highlighted { border-color: #0EA5E9; background: #1A3352; }
-  .request-source { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; padding: 3px 10px; border-radius: 20px; }
-  .source-people { background: rgba(96,165,250,0.15); color: #60A5FA; }
-  .source-agent { background: rgba(167,139,250,0.15); color: #A78BFA; }
-  .source-transcript { background: rgba(74,222,128,0.15); color: #4ADE80; }
-  .source-email { background: rgba(251,146,60,0.15); color: #FB923C; }
-  .request-dept { font-size: 10px; color: #64748B; margin-bottom: 6px; }
-  .request-text { font-size: 13px; color: #CBD5E1; line-height: 1.5; }
-  .request-tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px; margin-top: 8px; margin-right: 4px; background: rgba(14,165,233,0.1); color: #0EA5E9; }
+  /* ====== SECTION 1: CHAOS ====== */
+  .requests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px; max-width: 1240px; margin: 0 auto; }
+  .request-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+    cursor: default; transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .request-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+  .request-card.highlighted { border-color: var(--accent); background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(6,182,212,0.04)); cursor: pointer; }
+  .request-card.highlighted:hover { box-shadow: 0 8px 30px var(--accent-glow); }
+  .request-source { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 8px; padding: 3px 10px; border-radius: 20px; }
+  .source-people { background: rgba(96,165,250,0.12); color: #60A5FA; }
+  .source-agent { background: rgba(167,139,250,0.12); color: #A78BFA; }
+  .source-transcript { background: rgba(74,222,128,0.12); color: #4ADE80; }
+  .source-email { background: rgba(251,146,60,0.12); color: #FB923C; }
+  .request-dept { font-size: 11px; color: var(--text-muted); margin-bottom: 5px; font-weight: 500; }
+  .request-text { font-size: 13px; color: var(--text); line-height: 1.55; }
+  .request-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .request-tag { font-size: 10px; padding: 2px 8px; border-radius: 5px; background: rgba(14,165,233,0.08); color: var(--accent); font-weight: 500; border: 1px solid rgba(14,165,233,0.08); }
 
-  .chaos-count { text-align: center; margin-top: 30px; padding: 16px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; max-width: 600px; margin-left: auto; margin-right: auto; }
-  .chaos-count strong { color: #EF4444; font-size: 18px; }
-  .chaos-count p { color: #94A3B8; font-size: 13px; margin-top: 4px; }
+  .chaos-count {
+    text-align: center; margin-top: 40px; padding: 22px 30px;
+    background: linear-gradient(135deg, rgba(239,68,68,0.06), rgba(245,158,11,0.04));
+    border: 1px solid rgba(239,68,68,0.15); border-radius: 14px;
+    max-width: 620px; margin-left: auto; margin-right: auto;
+  }
+  .chaos-count strong { color: var(--red); font-size: 18px; font-weight: 800; }
+  .chaos-count p { color: var(--text-dim); font-size: 13px; margin-top: 6px; line-height: 1.6; }
 
-  /* SECTION 2: UNPACK */
-  .unpack-container { max-width: 1100px; margin: 0 auto; }
-  .unpack-header { text-align: center; margin-bottom: 30px; }
-  .unpack-header h1 { font-size: 32px; font-weight: 800; }
-  .unpack-header h1 span { color: #0EA5E9; }
+  /* ====== SECTION 2: UNPACK (Request Overview + Connections) ====== */
+  .unpack-container { max-width: 1200px; margin: 0 auto; }
+  .unpack-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
 
-  .unpack-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-  .unpack-left { }
-  .unpack-right { }
+  /* Left: Request Overview */
+  .original-request {
+    background: var(--surface); border: 1px solid rgba(239,68,68,0.2); border-radius: 14px;
+    padding: 24px; margin-bottom: 18px; position: relative; overflow: hidden;
+  }
+  .original-request::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--red), var(--orange)); }
+  .original-request h3 { color: var(--red); font-size: 11px; letter-spacing: 2px; margin-bottom: 12px; font-weight: 700; }
+  .original-request .quote { font-size: 17px; color: var(--text); font-style: italic; line-height: 1.7; border-left: 3px solid var(--red); padding-left: 16px; }
+  .original-request .meta { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
 
-  .original-request { background: #162640; border: 1px solid rgba(239,68,68,0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-  .original-request h3 { color: #EF4444; font-size: 12px; letter-spacing: 2px; margin-bottom: 10px; }
-  .original-request .quote { font-size: 18px; color: #E2E8F0; font-style: italic; line-height: 1.6; border-left: 3px solid #EF4444; padding-left: 16px; }
-  .original-request .meta { margin-top: 12px; font-size: 12px; color: #64748B; }
+  .unpack-step {
+    background: var(--surface); border-radius: 12px; padding: 20px;
+    margin-bottom: 12px; border-left: 4px solid; transition: all 0.3s;
+  }
+  .unpack-step:hover { transform: translateX(3px); box-shadow: 0 6px 24px rgba(0,0,0,0.15); }
+  .unpack-step h3 { font-size: 11px; font-weight: 800; letter-spacing: 2px; margin-bottom: 5px; }
+  .unpack-step h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .unpack-step ul { font-size: 13px; color: var(--text-dim); line-height: 1.7; list-style: none; padding: 0; }
+  .unpack-step ul li { padding: 3px 0 3px 18px; position: relative; }
+  .unpack-step ul li::before { content: '→'; position: absolute; left: 0; opacity: 0.5; }
+  .step-teal { border-color: var(--accent); } .step-teal h3 { color: var(--accent); }
+  .step-cyan { border-color: var(--cyan); } .step-cyan h3 { color: var(--cyan); }
 
-  .unpack-step { background: #162640; border-radius: 12px; padding: 18px; margin-bottom: 14px; border-left: 4px solid; transition: all 0.4s; }
-  .unpack-step h3 { font-size: 13px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
-  .unpack-step h4 { font-size: 15px; font-weight: 600; color: #E2E8F0; margin-bottom: 8px; }
-  .unpack-step p, .unpack-step ul { font-size: 13px; color: #94A3B8; line-height: 1.6; }
-  .unpack-step ul { list-style: none; padding: 0; }
-  .unpack-step ul li { padding: 3px 0; }
-  .unpack-step ul li::before { content: '→ '; }
-  .step-teal { border-color: #0EA5E9; } .step-teal h3 { color: #0EA5E9; }
-  .step-cyan { border-color: #06B6D4; } .step-cyan h3 { color: #06B6D4; }
-  .step-green { border-color: #10B981; } .step-green h3 { color: #10B981; }
-  .step-orange { border-color: #F59E0B; } .step-orange h3 { color: #F59E0B; }
-
-  .structured-output { background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(16,185,129,0.08)); border: 1px solid rgba(14,165,233,0.25); border-radius: 12px; padding: 20px; }
-  .structured-output h3 { color: #0EA5E9; font-size: 12px; letter-spacing: 2px; margin-bottom: 14px; }
-  .output-field { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(148,163,184,0.1); font-size: 13px; }
-  .output-field:last-child { border-bottom: none; }
-  .output-label { color: #64748B; font-weight: 500; }
-  .output-value { color: #E2E8F0; font-weight: 600; text-align: right; max-width: 60%; }
-  .output-value.high { color: #EF4444; }
-  .output-value.medium { color: #F59E0B; }
-  .output-value.teal { color: #0EA5E9; }
-  .output-value.green { color: #10B981; }
-
+  /* Structured Decision Card */
+  .structured-output {
+    background: linear-gradient(135deg, rgba(14,165,233,0.06), rgba(16,185,129,0.04));
+    border: 1px solid rgba(14,165,233,0.2); border-radius: 14px; padding: 22px;
+    position: relative; overflow: hidden;
+  }
+  .structured-output::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--green)); }
+  .structured-output h3 { color: var(--accent); font-size: 11px; letter-spacing: 2px; margin-bottom: 14px; font-weight: 700; }
+  .output-field { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid rgba(148,163,184,0.08); font-size: 13px; }
+  .output-field:last-of-type { border-bottom: none; }
+  .output-label { color: var(--text-muted); font-weight: 500; }
+  .output-value { color: var(--text); font-weight: 600; text-align: right; max-width: 60%; }
+  .output-value.high { color: var(--red); }
+  .output-value.medium { color: var(--orange); }
+  .output-value.teal { color: var(--accent); }
+  .output-value.green { color: var(--green); }
   .stakeholder-map { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
-  .stakeholder { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-  .stakeholder.owner { background: rgba(14,165,233,0.2); color: #0EA5E9; }
-  .stakeholder.input { background: rgba(16,185,129,0.15); color: #10B981; }
-  .stakeholder.approve { background: rgba(245,158,11,0.15); color: #F59E0B; }
+  .stakeholder { padding: 5px 13px; border-radius: 20px; font-size: 11px; font-weight: 600; transition: transform 0.2s; }
+  .stakeholder:hover { transform: scale(1.05); }
+  .stakeholder.owner { background: rgba(14,165,233,0.15); color: var(--accent); border: 1px solid rgba(14,165,233,0.2); }
+  .stakeholder.input { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.15); }
+  .stakeholder.approve { background: rgba(245,158,11,0.1); color: var(--orange); border: 1px solid rgba(245,158,11,0.15); }
 
-  /* SECTION 3: CLUSTERS */
-  .cluster-header { text-align: center; margin-bottom: 30px; }
-  .cluster-header h1 { font-size: 32px; font-weight: 800; }
-  .cluster-header h1 span { color: #0EA5E9; }
-  .cluster-header p { color: #64748B; font-size: 15px; max-width: 700px; margin: 8px auto 0; }
+  /* Right: Connections */
+  .connections-panel { }
+  .conn-section { margin-bottom: 24px; }
+  .conn-section-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .conn-section-title .dot { width: 8px; height: 8px; border-radius: 50%; }
 
-  .clusters-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
-  .cluster-group { background: #162640; border-radius: 14px; padding: 20px; border: 1px solid rgba(14,165,233,0.12); }
+  .conn-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px; margin-bottom: 10px; transition: all 0.3s; position: relative;
+  }
+  .conn-card:hover { border-color: var(--border-hover); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+  .conn-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .conn-card-source { font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 2px 8px; border-radius: 12px; }
+  .conn-card-dept { font-size: 11px; color: var(--text-muted); }
+  .conn-card-text { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .conn-card-relation { margin-top: 8px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px; display: inline-block; }
+  .relation-duplicate { background: rgba(239,68,68,0.1); color: var(--red); }
+  .relation-related { background: rgba(14,165,233,0.1); color: var(--accent); }
+  .relation-dependency { background: rgba(245,158,11,0.1); color: var(--orange); }
+  .relation-cluster { background: rgba(139,92,246,0.1); color: var(--purple); }
+
+  .conn-summary {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    padding: 20px; margin-top: 20px;
+  }
+  .conn-summary h4 { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 12px; letter-spacing: 1px; }
+  .conn-stat-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(148,163,184,0.06); font-size: 13px; }
+  .conn-stat-row:last-child { border-bottom: none; }
+  .conn-stat-label { color: var(--text-muted); }
+  .conn-stat-value { font-weight: 600; }
+
+  /* ====== SECTION 3: DECISION PATH ====== */
+  .dp-container { max-width: 1000px; margin: 0 auto; }
+
+  /* Timeline */
+  .dp-timeline {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; margin-bottom: 48px; padding: 8px 0; flex-wrap: wrap;
+  }
+  .dp-timeline-step { display: flex; align-items: center; cursor: pointer; flex-shrink: 0; }
+  .dp-timeline-node {
+    width: 44px; height: 44px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: white;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .dp-timeline-step:hover .dp-timeline-node { transform: scale(1.12); }
+  .dp-timeline-node.active { box-shadow: 0 0 0 3px rgba(255,255,255,0.15), 0 4px 16px rgba(0,0,0,0.3); }
+  .dp-timeline-label { font-size: 11px; font-weight: 600; margin-left: 8px; color: var(--text-muted); white-space: nowrap; }
+  .dp-timeline-connector { width: 40px; height: 2px; background: rgba(148,163,184,0.2); flex-shrink: 0; margin: 0 6px; }
+
+  .phase-bg-teal { background: linear-gradient(135deg, var(--accent), #0284C7); }
+  .phase-bg-green { background: linear-gradient(135deg, var(--green), #059669); }
+  .phase-bg-orange { background: linear-gradient(135deg, var(--orange), #D97706); }
+  .phase-bg-purple { background: linear-gradient(135deg, var(--purple), #7C3AED); }
+
+  /* Phase Cards */
+  .dp-phase {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    margin-bottom: 16px; overflow: hidden; transition: box-shadow 0.3s;
+  }
+  .dp-phase:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.15); }
+  .dp-phase-header {
+    padding: 20px 24px; display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; transition: background 0.2s; user-select: none;
+  }
+  .dp-phase-header:hover { background: var(--surface2); }
+  .dp-phase-header-left { display: flex; align-items: center; gap: 16px; }
+  .dp-phase-badge {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 18px; color: white; flex-shrink: 0;
+  }
+  .dp-phase-title { font-size: 17px; font-weight: 700; color: var(--text); }
+  .dp-phase-meta { display: flex; gap: 10px; margin-top: 4px; flex-wrap: wrap; }
+  .meta-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--text-muted);
+    background: rgba(148,163,184,0.08); padding: 3px 10px; border-radius: 10px;
+    font-weight: 500;
+  }
+  .dp-chevron {
+    width: 24px; height: 24px; color: var(--text-muted);
+    transition: transform 0.3s ease; flex-shrink: 0;
+  }
+  .dp-phase.open .dp-chevron { transform: rotate(180deg); }
+  .dp-phase-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .dp-phase.open .dp-phase-body { max-height: 2000px; }
+  .dp-phase-content { padding: 0 24px 24px; border-top: 1px solid rgba(148,163,184,0.06); }
+
+  /* Stakeholders inside phases */
+  .dp-stakeholders { margin-top: 16px; }
+  .dp-stake-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px; }
+  .dp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .dp-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+    transition: transform 0.15s;
+  }
+  .dp-chip:hover { transform: translateY(-1px); }
+  .dp-chip-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dp-chip-owner { background: rgba(14,165,233,0.12); color: var(--accent); }
+  .dp-chip-owner .dp-chip-dot { background: var(--accent); }
+  .dp-chip-input { background: rgba(16,185,129,0.08); color: var(--green); }
+  .dp-chip-input .dp-chip-dot { background: var(--green); }
+  .dp-chip-approve { background: rgba(245,158,11,0.08); color: var(--orange); }
+  .dp-chip-approve .dp-chip-dot { background: var(--orange); }
+  .dp-chip-ai { background: rgba(139,92,246,0.08); color: var(--purple); border: 1px dashed rgba(139,92,246,0.3); }
+  .dp-chip-ai .dp-chip-dot { background: var(--purple); }
+
+  /* Substeps */
+  .dp-substeps { margin-top: 20px; }
+  .dp-substep {
+    display: flex; gap: 12px; padding: 14px 16px; border-radius: 10px;
+    margin-bottom: 6px; transition: background 0.2s; align-items: flex-start;
+  }
+  .dp-substep:hover { background: rgba(255,255,255,0.02); }
+  .dp-substep-num { font-size: 13px; font-weight: 700; color: var(--text-muted); min-width: 28px; flex-shrink: 0; padding-top: 1px; }
+  .dp-substep-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .dp-substep-desc { font-size: 13px; color: var(--text-dim); margin-top: 2px; line-height: 1.5; }
+
+  /* Clarioo Bot Section */
+  .dp-bot {
+    margin-top: 20px; padding: 18px 20px;
+    background: linear-gradient(135deg, rgba(14,165,233,0.06), rgba(6,182,212,0.04));
+    border-radius: 14px; border: 1px solid rgba(14,165,233,0.15);
+  }
+  .dp-bot-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .dp-bot-avatar {
+    width: 32px; height: 32px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 14px; font-weight: 800;
+  }
+  .dp-bot-name { font-size: 14px; font-weight: 700; color: var(--accent); }
+  .dp-bot-role { font-size: 12px; color: var(--cyan); }
+  .dp-bot-steps { list-style: none; }
+  .dp-bot-steps li { display: flex; align-items: flex-start; gap: 8px; padding: 4px 0; font-size: 13px; color: var(--text-dim); }
+  .dp-bot-step-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--accent); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* Decision outcome */
+  .dp-outcome {
+    margin-top: 24px; background: linear-gradient(135deg, var(--accent), #0369A1);
+    border-radius: 16px; padding: 28px 32px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .dp-outcome::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.06), transparent 60%); }
+  .dp-outcome h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px; position: relative; }
+  .dp-outcome p { font-size: 14px; color: rgba(255,255,255,0.8); position: relative; line-height: 1.6; }
+
+  /* ====== SECTION 4: CLUSTERS ====== */
+  .clusters-container { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 18px; }
+  .cluster-group {
+    background: var(--surface); border-radius: 14px; padding: 22px;
+    border: 1px solid var(--border); transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .cluster-group::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--cluster-color); opacity: 0.5; transition: opacity 0.3s; }
+  .cluster-group:hover::before { opacity: 1; }
+  .cluster-group:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
   .cluster-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-  .cluster-dot { width: 12px; height: 12px; border-radius: 50%; }
-  .cluster-name { font-size: 15px; font-weight: 700; color: #E2E8F0; }
-  .cluster-count { font-size: 12px; color: #64748B; margin-left: auto; background: rgba(148,163,184,0.1); padding: 2px 10px; border-radius: 10px; }
-  .cluster-items { }
-  .cluster-item { padding: 8px 12px; margin-bottom: 6px; background: rgba(15,27,45,0.6); border-radius: 8px; font-size: 12px; color: #94A3B8; display: flex; justify-content: space-between; align-items: center; }
-  .cluster-item .priority { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
-  .priority.critical { background: rgba(239,68,68,0.15); color: #EF4444; }
-  .priority.high { background: rgba(245,158,11,0.15); color: #F59E0B; }
-  .priority.medium { background: rgba(14,165,233,0.15); color: #0EA5E9; }
-  .priority.low { background: rgba(148,163,184,0.1); color: #94A3B8; }
-  .cluster-meta { margin-top: 12px; display: flex; gap: 16px; font-size: 11px; color: #64748B; }
-  .cluster-meta span { display: flex; align-items: center; gap: 4px; }
+  .cluster-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .cluster-name { font-size: 15px; font-weight: 700; color: var(--text); }
+  .cluster-count { font-size: 11px; color: var(--text-muted); margin-left: auto; background: rgba(148,163,184,0.08); padding: 3px 12px; border-radius: 20px; font-weight: 600; }
+  .cluster-items { display: flex; flex-direction: column; gap: 5px; }
+  .cluster-item {
+    padding: 9px 12px; background: rgba(11,18,33,0.5); border-radius: 8px;
+    font-size: 12px; color: var(--text-dim); display: flex; justify-content: space-between;
+    align-items: center; transition: all 0.2s; border: 1px solid transparent;
+  }
+  .cluster-item:hover { background: rgba(14,165,233,0.04); border-color: var(--border); }
+  .cluster-item .priority { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .priority.critical { background: rgba(239,68,68,0.12); color: var(--red); }
+  .priority.high { background: rgba(245,158,11,0.12); color: var(--orange); }
+  .priority.medium { background: rgba(14,165,233,0.12); color: var(--accent); }
+  .priority.low { background: rgba(148,163,184,0.08); color: var(--text-muted); }
+  .cluster-meta { margin-top: 14px; display: flex; gap: 16px; font-size: 11px; color: var(--text-muted); padding-top: 12px; border-top: 1px solid rgba(148,163,184,0.06); }
 
-  .cluster-summary { max-width: 800px; margin: 30px auto 0; background: linear-gradient(135deg, #0EA5E9, #0284C7); border-radius: 14px; padding: 24px 30px; text-align: center; }
-  .cluster-summary h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-  .cluster-summary p { font-size: 14px; color: rgba(255,255,255,0.8); }
-  .cluster-stats { display: flex; justify-content: center; gap: 40px; margin-top: 16px; }
+  .cluster-summary {
+    max-width: 860px; margin: 40px auto 0;
+    background: linear-gradient(135deg, var(--accent), #0369A1);
+    border-radius: 18px; padding: 32px 36px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cluster-summary::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.06), transparent 60%); }
+  .cluster-summary h3 { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 8px; position: relative; }
+  .cluster-summary p { font-size: 14px; color: rgba(255,255,255,0.8); position: relative; line-height: 1.6; }
+  .cluster-stats { display: flex; justify-content: center; gap: 44px; margin-top: 24px; position: relative; }
   .cluster-stat { text-align: center; }
-  .cluster-stat .num { font-size: 28px; font-weight: 800; color: #fff; }
-  .cluster-stat .label { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .cluster-stat .num { font-size: 32px; font-weight: 900; color: #fff; line-height: 1; }
+  .cluster-stat .label { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 4px; font-weight: 500; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav { padding: 0 12px; height: 56px; }
+    .nav-tabs { overflow-x: auto; gap: 2px; }
+    .nav-tab { padding: 6px 10px; font-size: 11px; }
+    .section { padding: 72px 16px 40px; }
+    .section-title { font-size: 26px; }
+    .unpack-layout { grid-template-columns: 1fr; }
+    .clusters-container { grid-template-columns: 1fr; }
+    .requests-grid { grid-template-columns: 1fr; }
+    .cluster-stats { gap: 20px; flex-wrap: wrap; }
+    .dp-timeline { display: none; }
+  }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.2); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.3); }
 </style>
 </head>
 <body>
+
+<div class="ambient"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
 
 <!-- NAV -->
 <div class="nav">
@@ -130,17 +371,16 @@
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showSection(0)">1. The Chaos</button>
     <button class="nav-tab" onclick="showSection(1)">2. Clarioo Unpacks</button>
-    <button class="nav-tab" onclick="showSection(2)">3. Clustered & Prioritised</button>
+    <button class="nav-tab" onclick="showSection(2)">3. Decision Path</button>
+    <button class="nav-tab" onclick="showSection(3)">4. Clustered & Prioritised</button>
   </div>
 </div>
 
-<!-- SECTION 1: CHAOS -->
+<!-- ==================== SECTION 1: CHAOS ==================== -->
 <div class="section active" id="sec0">
-  <div class="chaos-header">
-    <div class="chaos-subtitle">WHAT ENTERPRISES DEAL WITH EVERY WEEK</div>
-    <h1>28 Requests. <span>Zero Infrastructure.</span></h1>
-    <p>These are real change requests flooding in from people, agents, meetings, and emails — across every function. Today, they live in Slack, inboxes, and people's heads.</p>
-  </div>
+  <div class="section-label">What Enterprises Deal With Every Week</div>
+  <div class="section-title">28 Requests. <span>Zero Infrastructure.</span></div>
+  <div class="section-desc">Real change requests flooding in from people, agents, meetings, and emails — across every function. Today, they live in Slack, inboxes, and people's heads.</div>
   <div class="requests-grid" id="requestsGrid"></div>
   <div class="chaos-count">
     <strong>This is one week.</strong>
@@ -148,15 +388,16 @@
   </div>
 </div>
 
-<!-- SECTION 2: UNPACK -->
+<!-- ==================== SECTION 2: UNPACK ==================== -->
 <div class="section" id="sec1">
   <div class="unpack-container">
-    <div class="unpack-header">
-      <div class="chaos-subtitle">HOW CLARIOO PROCESSES A SINGLE REQUEST</div>
-      <h1>From Vague Intent to <span>Structured Decision</span></h1>
-    </div>
-    <div class="unpack-flow">
-      <div class="unpack-left">
+    <div class="section-label">How Clarioo Processes a Single Request</div>
+    <div class="section-title">From Vague Intent to <span>Structured Understanding</span></div>
+    <div class="section-desc">Clarioo takes a raw request, unpacks the real intent, enriches it with context — and immediately shows how it connects to everything else in the system.</div>
+
+    <div class="unpack-layout">
+      <!-- LEFT: Request Overview -->
+      <div>
         <div class="original-request">
           <h3>RAW REQUEST</h3>
           <div class="quote">"We need to explore using AI agents to improve our invoicing process. The current system is slow, error-prone, and our AP team is drowning."</div>
@@ -170,7 +411,7 @@
             <li>Not just "AI agents" — the real pain is AP processing speed and error rate</li>
             <li>Team of 4 processing ~800 invoices/month manually</li>
             <li>Error rate: ~6% (industry avg: 1-2%)</li>
-            <li>Average processing time: 4.2 days (target: <1 day)</li>
+            <li>Average processing time: 4.2 days (target: &lt;1 day)</li>
           </ul>
         </div>
 
@@ -182,33 +423,6 @@
             <li>ERP upgrade planned for Q3 (may affect integration)</li>
             <li>Compliance requirement: SOX audit trail mandatory</li>
             <li>Budget: Ops has $150K unallocated for automation initiatives</li>
-            <li>Related: Finance team raised a similar request 3 months ago (archived)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="unpack-right">
-        <div class="unpack-step step-green">
-          <h3>03 — ANALYSE</h3>
-          <h4>What are the options?</h4>
-          <ul>
-            <li>Option A: AI-native AP platform (Stampli, Tipalti) — $40-80K/yr, 2-week setup</li>
-            <li>Option B: SAP built-in automation module — $0 extra, but 3-month config</li>
-            <li>Option C: RPA + AI layer on existing stack (UiPath) — $60K/yr, custom build</li>
-            <li>Option D: Wait for Q3 ERP upgrade, assess then — $0, delays 4+ months</li>
-            <li>Recommendation: Option A scores highest on speed, accuracy, and compliance</li>
-          </ul>
-        </div>
-
-        <div class="unpack-step step-orange">
-          <h3>04 — STRUCTURE</h3>
-          <h4>Decision path & stakeholders</h4>
-          <ul>
-            <li>Decision owner: CFO (budget authority + compliance responsibility)</li>
-            <li>Input needed: IT (integration), Compliance (SOX), AP Team Lead (requirements)</li>
-            <li>Approval: CFO + CTO (if integration touches core systems)</li>
-            <li>Timeline: 3-week decision window before Q3 planning lock</li>
-            <li>Linked decisions: ERP upgrade (Q3), Finance automation roadmap</li>
           </ul>
         </div>
 
@@ -217,42 +431,444 @@
           <div class="output-field"><span class="output-label">Decision</span><span class="output-value teal">AP Invoice Automation</span></div>
           <div class="output-field"><span class="output-label">Priority</span><span class="output-value high">High — $180K/yr manual cost, 6% error rate</span></div>
           <div class="output-field"><span class="output-label">Complexity</span><span class="output-value medium">Medium — cross-functional, compliance-sensitive</span></div>
-          <div class="output-field"><span class="output-label">Est. decision time</span><span class="output-value green">3 weeks (parallel stakeholder input)</span></div>
-          <div class="output-field"><span class="output-label">Linked to</span><span class="output-value teal">ERP Upgrade (Q3) · Finance Automation Roadmap</span></div>
           <div class="output-field"><span class="output-label">Cluster</span><span class="output-value teal">Process Automation (5 related requests)</span></div>
           <div class="stakeholder-map">
             <span class="stakeholder owner">CFO — Decision Owner</span>
-            <span class="stakeholder input">IT — Integration Review</span>
-            <span class="stakeholder input">AP Team Lead — Requirements</span>
-            <span class="stakeholder approve">Compliance — SOX Audit</span>
+            <span class="stakeholder input">IT — Integration</span>
+            <span class="stakeholder input">AP Team Lead</span>
+            <span class="stakeholder approve">Compliance — SOX</span>
           </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Connections -->
+      <div class="connections-panel">
+        <div class="conn-section">
+          <div class="conn-section-title" style="color: var(--red);">
+            <span class="dot" style="background: var(--red);"></span> Duplicate Detected
+          </div>
+          <div class="conn-card">
+            <div class="conn-card-header">
+              <span class="conn-card-source source-people" style="font-size:10px; padding:2px 8px;">PEOPLE</span>
+              <span class="conn-card-dept">Finance</span>
+            </div>
+            <div class="conn-card-text">"Finance team raised a similar request 3 months ago — evaluate AP automation tools"</div>
+            <span class="conn-card-relation relation-duplicate">Duplicate — merged</span>
+          </div>
+        </div>
+
+        <div class="conn-section">
+          <div class="conn-section-title" style="color: var(--accent);">
+            <span class="dot" style="background: var(--accent);"></span> Same Cluster (Process Automation)
+          </div>
+          <div class="conn-card">
+            <div class="conn-card-header">
+              <span class="conn-card-source source-people" style="font-size:10px; padding:2px 8px;">PEOPLE</span>
+              <span class="conn-card-dept">Operations</span>
+            </div>
+            <div class="conn-card-text">"Need to evaluate RPA tools for accounts payable"</div>
+            <span class="conn-card-relation relation-related">Same cluster — complementary scope</span>
+          </div>
+          <div class="conn-card">
+            <div class="conn-card-header">
+              <span class="conn-card-source source-people" style="font-size:10px; padding:2px 8px;">PEOPLE</span>
+              <span class="conn-card-dept">IT</span>
+            </div>
+            <div class="conn-card-text">"IT helpdesk tickets have doubled — should we deploy an AI chatbot?"</div>
+            <span class="conn-card-relation relation-cluster">Same cluster — different scope</span>
+          </div>
+        </div>
+
+        <div class="conn-section">
+          <div class="conn-section-title" style="color: var(--orange);">
+            <span class="dot" style="background: var(--orange);"></span> Dependencies
+          </div>
+          <div class="conn-card">
+            <div class="conn-card-header">
+              <span class="conn-card-source source-people" style="font-size:10px; padding:2px 8px;">PEOPLE</span>
+              <span class="conn-card-dept">Supply Chain</span>
+            </div>
+            <div class="conn-card-text">"Can we replace our legacy ERP module for inventory?"</div>
+            <span class="conn-card-relation relation-dependency">Dependency — ERP upgrade affects both</span>
+          </div>
+          <div class="conn-card">
+            <div class="conn-card-header">
+              <span class="conn-card-source source-people" style="font-size:10px; padding:2px 8px;">PEOPLE</span>
+              <span class="conn-card-dept">IT</span>
+            </div>
+            <div class="conn-card-text">"Should we adopt Copilot across the organisation?"</div>
+            <span class="conn-card-relation relation-dependency">Dependency — AI adoption strategy overlap</span>
+          </div>
+        </div>
+
+        <div class="conn-summary">
+          <h4>CONNECTION SUMMARY</h4>
+          <div class="conn-stat-row"><span class="conn-stat-label">Duplicates found</span><span class="conn-stat-value" style="color:var(--red);">1 (merged)</span></div>
+          <div class="conn-stat-row"><span class="conn-stat-label">Same cluster</span><span class="conn-stat-value" style="color:var(--accent);">5 requests</span></div>
+          <div class="conn-stat-row"><span class="conn-stat-label">Dependencies</span><span class="conn-stat-value" style="color:var(--orange);">2 cross-cluster</span></div>
+          <div class="conn-stat-row"><span class="conn-stat-label">Stakeholder overlap</span><span class="conn-stat-value" style="color:var(--green);">CFO, IT, Compliance</span></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SECTION 3: CLUSTERS -->
+<!-- ==================== SECTION 3: DECISION PATH ==================== -->
 <div class="section" id="sec2">
-  <div class="cluster-header">
-    <div class="chaos-subtitle">THE SYSTEM VIEW</div>
-    <h1>28 Requests → <span>6 Decision Clusters</span></h1>
-    <p>Clarioo automatically clusters related requests, detects duplicates, identifies dependencies, and surfaces what the organisation should focus on first.</p>
+  <div class="dp-container">
+    <div class="section-label">The Road to a Decision</div>
+    <div class="section-title">Structured <span>Decision Path</span></div>
+    <div class="section-desc">Clarioo generates a clear, phased decision path — with owners, inputs needed, timelines, and what Clarioo will do at each step.</div>
+
+    <!-- Timeline -->
+    <div class="dp-timeline">
+      <div class="dp-timeline-step" onclick="scrollToPhase('dp-phase-0')">
+        <div class="dp-timeline-node phase-bg-teal active">0</div>
+        <div class="dp-timeline-label">Scope & Align</div>
+      </div>
+      <div class="dp-timeline-connector"></div>
+      <div class="dp-timeline-step" onclick="scrollToPhase('dp-phase-1')">
+        <div class="dp-timeline-node phase-bg-green">1</div>
+        <div class="dp-timeline-label">Gather Evidence</div>
+      </div>
+      <div class="dp-timeline-connector"></div>
+      <div class="dp-timeline-step" onclick="scrollToPhase('dp-phase-2')">
+        <div class="dp-timeline-node phase-bg-orange">2</div>
+        <div class="dp-timeline-label">Analyse Options</div>
+      </div>
+      <div class="dp-timeline-connector"></div>
+      <div class="dp-timeline-step" onclick="scrollToPhase('dp-phase-3')">
+        <div class="dp-timeline-node phase-bg-purple">3</div>
+        <div class="dp-timeline-label">Decide</div>
+      </div>
+    </div>
+
+    <!-- Phase 0 -->
+    <div id="dp-phase-0" class="dp-phase open">
+      <div class="dp-phase-header" onclick="togglePhase(this)">
+        <div class="dp-phase-header-left">
+          <div class="dp-phase-badge phase-bg-teal">0</div>
+          <div>
+            <div class="dp-phase-title">Scope & Align</div>
+            <div class="dp-phase-meta">
+              <span class="meta-pill">2 days</span>
+              <span class="meta-pill">1-2 hrs stakeholder time</span>
+            </div>
+          </div>
+        </div>
+        <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="dp-phase-body">
+        <div class="dp-phase-content">
+          <div class="dp-stakeholders">
+            <div class="dp-stake-title">Decision Owner</div>
+            <div class="dp-chips">
+              <span class="dp-chip dp-chip-owner"><span class="dp-chip-dot"></span>CFO</span>
+            </div>
+          </div>
+          <div class="dp-stakeholders">
+            <div class="dp-stake-title">Input Needed From</div>
+            <div class="dp-chips">
+              <span class="dp-chip dp-chip-input"><span class="dp-chip-dot"></span>Ops Director (requestor)</span>
+              <span class="dp-chip dp-chip-input"><span class="dp-chip-dot"></span>AP Team Lead</span>
+              <span class="dp-chip dp-chip-input"><span class="dp-chip-dot"></span>Finance (duplicate requestor)</span>
+            </div>
+          </div>
+
+          <div class="dp-substeps">
+            <div class="dp-substep">
+              <div class="dp-substep-num">0.1</div>
+              <div>
+                <div class="dp-substep-title">Confirm the real problem statement</div>
+                <div class="dp-substep-desc">Is this about AP automation specifically, or broader process efficiency? Merge with Finance's prior request.</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">0.2</div>
+              <div>
+                <div class="dp-substep-title">Define success criteria</div>
+                <div class="dp-substep-desc">Target: processing time &lt;1 day, error rate &lt;2%, SOX compliance maintained, ROI within 12 months.</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">0.3</div>
+              <div>
+                <div class="dp-substep-title">Confirm budget envelope & timeline constraints</div>
+                <div class="dp-substep-desc">$150K available. Q3 ERP upgrade is a hard dependency — decision needed within 3 weeks.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dp-bot">
+            <div class="dp-bot-header">
+              <div class="dp-bot-avatar">C</div>
+              <div>
+                <div class="dp-bot-name">What Clarioo will do</div>
+                <div class="dp-bot-role">Your decision analyst</div>
+              </div>
+            </div>
+            <ul class="dp-bot-steps">
+              <li><span class="dp-bot-step-num">1</span>Notify CFO and stakeholders, share structured request context</li>
+              <li><span class="dp-bot-step-num">2</span>Merge Finance's duplicate request, consolidate all prior context</li>
+              <li><span class="dp-bot-step-num">3</span>Draft problem statement + success criteria for stakeholder review</li>
+              <li><span class="dp-bot-step-num">4</span>Flag the Q3 ERP dependency and timeline constraint</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 1 -->
+    <div id="dp-phase-1" class="dp-phase">
+      <div class="dp-phase-header" onclick="togglePhase(this)">
+        <div class="dp-phase-header-left">
+          <div class="dp-phase-badge phase-bg-green">1</div>
+          <div>
+            <div class="dp-phase-title">Gather Evidence</div>
+            <div class="dp-phase-meta">
+              <span class="meta-pill">1 week</span>
+              <span class="meta-pill">3-4 hrs stakeholder time</span>
+              <span class="meta-pill">4 stakeholders + AI</span>
+            </div>
+          </div>
+        </div>
+        <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="dp-phase-body">
+        <div class="dp-phase-content">
+          <div class="dp-stakeholders">
+            <div class="dp-stake-title">Contributors</div>
+            <div class="dp-chips">
+              <span class="dp-chip dp-chip-input"><span class="dp-chip-dot"></span>AP Team Lead — current process data</span>
+              <span class="dp-chip dp-chip-input"><span class="dp-chip-dot"></span>IT — integration requirements</span>
+              <span class="dp-chip dp-chip-approve"><span class="dp-chip-dot"></span>Compliance — SOX constraints</span>
+              <span class="dp-chip dp-chip-ai"><span class="dp-chip-dot"></span>Vendor Intelligence Agent</span>
+            </div>
+          </div>
+
+          <div class="dp-substeps">
+            <div class="dp-substep">
+              <div class="dp-substep-num">1.1</div>
+              <div>
+                <div class="dp-substep-title">Quantify current state pain</div>
+                <div class="dp-substep-desc">Get actual data: invoice volumes, error rates, time per invoice, cost of errors, team capacity.</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">1.2</div>
+              <div>
+                <div class="dp-substep-title">Document integration requirements</div>
+                <div class="dp-substep-desc">SAP integration points, data formats, API availability, security requirements.</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">1.3</div>
+              <div>
+                <div class="dp-substep-title">Define compliance requirements</div>
+                <div class="dp-substep-desc">SOX audit trail needs, data residency, access controls, approval workflows.</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">1.4</div>
+              <div>
+                <div class="dp-substep-title">Map ERP upgrade impact</div>
+                <div class="dp-substep-desc">What changes in Q3? Does the new ERP include AP automation? Can we run parallel?</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dp-bot">
+            <div class="dp-bot-header">
+              <div class="dp-bot-avatar">C</div>
+              <div>
+                <div class="dp-bot-name">What Clarioo will do</div>
+                <div class="dp-bot-role">Your decision analyst</div>
+              </div>
+            </div>
+            <ul class="dp-bot-steps">
+              <li><span class="dp-bot-step-num">1</span>Send targeted data requests to each stakeholder with clear templates</li>
+              <li><span class="dp-bot-step-num">2</span>Run vendor intelligence scan (market landscape, pricing, reviews)</li>
+              <li><span class="dp-bot-step-num">3</span>Track responses, send reminders, flag blockers</li>
+              <li><span class="dp-bot-step-num">4</span>Compile consolidated evidence package for Phase 2</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div id="dp-phase-2" class="dp-phase">
+      <div class="dp-phase-header" onclick="togglePhase(this)">
+        <div class="dp-phase-header-left">
+          <div class="dp-phase-badge phase-bg-orange">2</div>
+          <div>
+            <div class="dp-phase-title">Analyse Options</div>
+            <div class="dp-phase-meta">
+              <span class="meta-pill">1 week</span>
+              <span class="meta-pill">2-3 hrs stakeholder time</span>
+              <span class="meta-pill">AI-assisted analysis</span>
+            </div>
+          </div>
+        </div>
+        <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="dp-phase-body">
+        <div class="dp-phase-content">
+          <div class="dp-stakeholders">
+            <div class="dp-stake-title">Evaluators</div>
+            <div class="dp-chips">
+              <span class="dp-chip dp-chip-owner"><span class="dp-chip-dot"></span>CFO — budget sign-off</span>
+              <span class="dp-chip dp-chip-input"><span class="dp-chip-dot"></span>CTO — architecture review</span>
+              <span class="dp-chip dp-chip-input"><span class="dp-chip-dot"></span>IT — integration feasibility</span>
+              <span class="dp-chip dp-chip-ai"><span class="dp-chip-dot"></span>Cost Analysis Agent</span>
+            </div>
+          </div>
+
+          <div class="dp-substeps">
+            <div class="dp-substep">
+              <div class="dp-substep-num">2.1</div>
+              <div>
+                <div class="dp-substep-title">Score options against requirements</div>
+                <div class="dp-substep-desc">Option A: AI-native platform (Stampli/Tipalti) · Option B: SAP automation module · Option C: RPA + AI (UiPath) · Option D: Wait for ERP upgrade</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">2.2</div>
+              <div>
+                <div class="dp-substep-title">Build cost comparison (TCO over 3 years)</div>
+                <div class="dp-substep-desc">Include: license costs, implementation, integration effort, ongoing maintenance, opportunity cost of delay.</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">2.3</div>
+              <div>
+                <div class="dp-substep-title">Risk assessment per option</div>
+                <div class="dp-substep-desc">Integration risk, vendor lock-in, compliance gaps, timeline risk with Q3 ERP.</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">2.4</div>
+              <div>
+                <div class="dp-substep-title">Stakeholder scoring & preference vote</div>
+                <div class="dp-substep-desc">Each evaluator scores options on a weighted matrix. Clarioo consolidates and surfaces consensus/disagreements.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dp-bot">
+            <div class="dp-bot-header">
+              <div class="dp-bot-avatar">C</div>
+              <div>
+                <div class="dp-bot-name">What Clarioo will do</div>
+                <div class="dp-bot-role">Your decision analyst</div>
+              </div>
+            </div>
+            <ul class="dp-bot-steps">
+              <li><span class="dp-bot-step-num">1</span>Generate options comparison matrix with evidence from Phase 1</li>
+              <li><span class="dp-bot-step-num">2</span>Build TCO model using market data + internal cost inputs</li>
+              <li><span class="dp-bot-step-num">3</span>Run stakeholder scoring process and track responses</li>
+              <li><span class="dp-bot-step-num">4</span>Produce recommendation brief with clear rationale</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div id="dp-phase-3" class="dp-phase">
+      <div class="dp-phase-header" onclick="togglePhase(this)">
+        <div class="dp-phase-header-left">
+          <div class="dp-phase-badge phase-bg-purple">3</div>
+          <div>
+            <div class="dp-phase-title">Decision & Next Steps</div>
+            <div class="dp-phase-meta">
+              <span class="meta-pill">2 days</span>
+              <span class="meta-pill">1 hr — decision meeting</span>
+            </div>
+          </div>
+        </div>
+        <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="dp-phase-body">
+        <div class="dp-phase-content">
+          <div class="dp-stakeholders">
+            <div class="dp-stake-title">Decision Makers</div>
+            <div class="dp-chips">
+              <span class="dp-chip dp-chip-owner"><span class="dp-chip-dot"></span>CFO — final authority</span>
+              <span class="dp-chip dp-chip-approve"><span class="dp-chip-dot"></span>CTO — if core system integration</span>
+            </div>
+          </div>
+
+          <div class="dp-substeps">
+            <div class="dp-substep">
+              <div class="dp-substep-num">3.1</div>
+              <div>
+                <div class="dp-substep-title">Review recommendation brief</div>
+                <div class="dp-substep-desc">Decision makers review the consolidated analysis, scoring results, and Clarioo's recommendation.</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">3.2</div>
+              <div>
+                <div class="dp-substep-title">Decision meeting</div>
+                <div class="dp-substep-desc">30-60 min focused session. All evidence pre-read. Decide: approve, modify, defer, or reject.</div>
+              </div>
+            </div>
+            <div class="dp-substep">
+              <div class="dp-substep-num">3.3</div>
+              <div>
+                <div class="dp-substep-title">Document decision & rationale</div>
+                <div class="dp-substep-desc">Capture the decision, key factors, dissenting views, conditions, and next actions for decision memory.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dp-bot">
+            <div class="dp-bot-header">
+              <div class="dp-bot-avatar">C</div>
+              <div>
+                <div class="dp-bot-name">What Clarioo will do</div>
+                <div class="dp-bot-role">Your decision analyst</div>
+              </div>
+            </div>
+            <ul class="dp-bot-steps">
+              <li><span class="dp-bot-step-num">1</span>Prepare decision brief with executive summary and recommendation</li>
+              <li><span class="dp-bot-step-num">2</span>Schedule decision meeting, distribute pre-reads</li>
+              <li><span class="dp-bot-step-num">3</span>Record decision, rationale, and conditions into decision memory</li>
+              <li><span class="dp-bot-step-num">4</span>Trigger implementation workstream and notify all stakeholders</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dp-outcome">
+      <h3>From 1 vague Slack message to a decision in 3 weeks</h3>
+      <p>Structured phases. Clear owners at every step. Evidence-based analysis. Full decision memory for the future.<br>Total stakeholder time: ~8 hours. Clarioo handles the rest.</p>
+    </div>
   </div>
+</div>
+
+<!-- ==================== SECTION 4: CLUSTERS ==================== -->
+<div class="section" id="sec3">
+  <div class="section-label">The System View</div>
+  <div class="section-title">28 Requests → <span>6 Decision Clusters</span></div>
+  <div class="section-desc">Clarioo automatically clusters related requests, detects duplicates, identifies dependencies, and surfaces what the organisation should focus on first.</div>
   <div class="clusters-container" id="clustersContainer"></div>
   <div class="cluster-summary">
     <h3>From 28 chaotic requests to 6 structured decision tracks</h3>
     <p>Each cluster has a clear owner, evidence package, stakeholder map, and timeline. Decision memory captures everything for the future.</p>
     <div class="cluster-stats">
-      <div class="cluster-stat"><div class="num">28</div><div class="label">Raw requests captured</div></div>
-      <div class="cluster-stat"><div class="num">6</div><div class="label">Decision clusters</div></div>
-      <div class="cluster-stat"><div class="num">4</div><div class="label">Duplicates merged</div></div>
-      <div class="cluster-stat"><div class="num">3</div><div class="label">Dependencies found</div></div>
+      <div class="cluster-stat"><div class="num" data-target="28">0</div><div class="label">Raw requests captured</div></div>
+      <div class="cluster-stat"><div class="num" data-target="6">0</div><div class="label">Decision clusters</div></div>
+      <div class="cluster-stat"><div class="num" data-target="4">0</div><div class="label">Duplicates merged</div></div>
+      <div class="cluster-stat"><div class="num" data-target="3">0</div><div class="label">Dependencies found</div></div>
     </div>
   </div>
 </div>
 
 <script>
+// ===== DATA =====
 const requests = [
   { text: "We need to automate our applicant tracking process", dept: "HR", source: "people", tags: ["automation","HR"] },
   { text: "Can we explore using AI agents to improve invoicing?", dept: "Operations", source: "people", tags: ["AI","automation","finance"] },
@@ -296,7 +912,7 @@ requests.forEach((r, i) => {
     <span class="request-source ${sourceClasses[r.source]}">${sourceLabels[r.source]}</span>
     <div class="request-dept">${r.dept}</div>
     <div class="request-text">${r.text}</div>
-    <div>${r.tags.map(t => '<span class="request-tag">' + t + '</span>').join('')}</div>
+    <div class="request-tags">${r.tags.map(t => '<span class="request-tag">' + t + '</span>').join('')}</div>
   `;
   if (i === 1) card.onclick = () => showSection(1);
   grid.appendChild(card);
@@ -333,7 +949,7 @@ const clusters = [
   { name: "AI & Agent Adoption", color: "#8B5CF6", items: [
     { text: "Adopt Copilot across the org", priority: "high" },
     { text: "CDP platform for marketing", priority: "medium" },
-    { text: "Jenkins → GitHub Actions migration", priority: "low" },
+    { text: "Jenkins to GitHub Actions migration", priority: "low" },
   ], deps: "Linked to: Process Automation cluster", est: "~4 weeks" },
   { name: "Cost Optimisation & Waste", color: "#06B6D4", items: [
     { text: "CRM too expensive — evaluate alternatives", priority: "high" },
@@ -344,12 +960,13 @@ const clusters = [
 ];
 
 const cc = document.getElementById('clustersContainer');
-clusters.forEach(cl => {
+clusters.forEach((cl, idx) => {
   const div = document.createElement('div');
   div.className = 'cluster-group';
+  div.style.cssText = '--cluster-color: ' + cl.color;
   div.innerHTML = `
     <div class="cluster-title">
-      <div class="cluster-dot" style="background:${cl.color}"></div>
+      <div class="cluster-dot" style="background:${cl.color}; box-shadow: 0 0 10px ${cl.color}40"></div>
       <div class="cluster-name">${cl.name}</div>
       <div class="cluster-count">${cl.items.length} requests</div>
     </div>
@@ -357,17 +974,52 @@ clusters.forEach(cl => {
       ${cl.items.map(it => `<div class="cluster-item"><span>${it.text}</span><span class="priority ${it.priority}">${it.priority.toUpperCase()}</span></div>`).join('')}
     </div>
     <div class="cluster-meta">
-      <span>⏱ Est: ${cl.est}</span>
-      <span>🔗 ${cl.deps}</span>
+      <span>&#9201; ${cl.est}</span>
+      <span>&#128279; ${cl.deps}</span>
     </div>
   `;
   cc.appendChild(div);
 });
 
+// ===== NAVIGATION =====
 function showSection(idx) {
   document.querySelectorAll('.section').forEach((s, i) => s.classList.toggle('active', i === idx));
   document.querySelectorAll('.nav-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (idx === 3) setTimeout(animateCounters, 400);
+}
+
+// ===== DECISION PATH INTERACTIONS =====
+function togglePhase(header) {
+  const card = header.closest('.dp-phase');
+  card.classList.toggle('open');
+}
+
+function scrollToPhase(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const card = el;
+  if (!card.classList.contains('open')) card.classList.add('open');
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ===== COUNTER ANIMATION =====
+function animateCounters() {
+  document.querySelectorAll('.cluster-stat .num').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    if (!target) return;
+    const duration = 1200;
+    const start = performance.now();
+    el.textContent = '0';
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased);
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
 }
 </script>
 </body>
