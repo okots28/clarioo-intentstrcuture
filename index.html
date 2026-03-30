@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clarioo — From Chaos to Clarity</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #0F1B2D; color: #E2E8F0; overflow-x: hidden; }
+
+  /* NAV */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15,27,45,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(14,165,233,0.15); padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-brand { font-size: 18px; font-weight: 800; letter-spacing: 4px; color: #fff; }
+  .nav-brand span { color: #0EA5E9; }
+  .nav-tabs { display: flex; gap: 4px; }
+  .nav-tab { padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s; color: #94A3B8; background: transparent; border: none; }
+  .nav-tab:hover { color: #E2E8F0; background: rgba(14,165,233,0.1); }
+  .nav-tab.active { color: #fff; background: #0EA5E9; }
+
+  /* SECTIONS */
+  .section { display: none; min-height: 100vh; padding: 80px 40px 40px; }
+  .section.active { display: block; }
+
+  /* SECTION 1: CHAOS */
+  .chaos-header { text-align: center; margin-bottom: 40px; }
+  .chaos-header h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+  .chaos-header h1 span { color: #0EA5E9; }
+  .chaos-header p { color: #64748B; font-size: 16px; max-width: 700px; margin: 0 auto; }
+  .chaos-subtitle { text-align: center; color: #F59E0B; font-size: 13px; font-weight: 600; letter-spacing: 2px; margin-bottom: 8px; }
+
+  .requests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; max-width: 1200px; margin: 0 auto; }
+  .request-card { background: #162640; border: 1px solid rgba(14,165,233,0.12); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
+  .request-card:hover { border-color: #0EA5E9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,165,233,0.15); }
+  .request-card.highlighted { border-color: #0EA5E9; background: #1A3352; }
+  .request-source { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; padding: 3px 10px; border-radius: 20px; }
+  .source-people { background: rgba(96,165,250,0.15); color: #60A5FA; }
+  .source-agent { background: rgba(167,139,250,0.15); color: #A78BFA; }
+  .source-transcript { background: rgba(74,222,128,0.15); color: #4ADE80; }
+  .source-email { background: rgba(251,146,60,0.15); color: #FB923C; }
+  .request-dept { font-size: 10px; color: #64748B; margin-bottom: 6px; }
+  .request-text { font-size: 13px; color: #CBD5E1; line-height: 1.5; }
+  .request-tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px; margin-top: 8px; margin-right: 4px; background: rgba(14,165,233,0.1); color: #0EA5E9; }
+
+  .chaos-count { text-align: center; margin-top: 30px; padding: 16px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; max-width: 600px; margin-left: auto; margin-right: auto; }
+  .chaos-count strong { color: #EF4444; font-size: 18px; }
+  .chaos-count p { color: #94A3B8; font-size: 13px; margin-top: 4px; }
+
+  /* SECTION 2: UNPACK */
+  .unpack-container { max-width: 1100px; margin: 0 auto; }
+  .unpack-header { text-align: center; margin-bottom: 30px; }
+  .unpack-header h1 { font-size: 32px; font-weight: 800; }
+  .unpack-header h1 span { color: #0EA5E9; }
+
+  .unpack-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .unpack-left { }
+  .unpack-right { }
+
+  .original-request { background: #162640; border: 1px solid rgba(239,68,68,0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+  .original-request h3 { color: #EF4444; font-size: 12px; letter-spacing: 2px; margin-bottom: 10px; }
+  .original-request .quote { font-size: 18px; color: #E2E8F0; font-style: italic; line-height: 1.6; border-left: 3px solid #EF4444; padding-left: 16px; }
+  .original-request .meta { margin-top: 12px; font-size: 12px; color: #64748B; }
+
+  .unpack-step { background: #162640; border-radius: 12px; padding: 18px; margin-bottom: 14px; border-left: 4px solid; transition: all 0.4s; }
+  .unpack-step h3 { font-size: 13px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
+  .unpack-step h4 { font-size: 15px; font-weight: 600; color: #E2E8F0; margin-bottom: 8px; }
+  .unpack-step p, .unpack-step ul { font-size: 13px; color: #94A3B8; line-height: 1.6; }
+  .unpack-step ul { list-style: none; padding: 0; }
+  .unpack-step ul li { padding: 3px 0; }
+  .unpack-step ul li::before { content: '→ '; }
+  .step-teal { border-color: #0EA5E9; } .step-teal h3 { color: #0EA5E9; }
+  .step-cyan { border-color: #06B6D4; } .step-cyan h3 { color: #06B6D4; }
+  .step-green { border-color: #10B981; } .step-green h3 { color: #10B981; }
+  .step-orange { border-color: #F59E0B; } .step-orange h3 { color: #F59E0B; }
+
+  .structured-output { background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(16,185,129,0.08)); border: 1px solid rgba(14,165,233,0.25); border-radius: 12px; padding: 20px; }
+  .structured-output h3 { color: #0EA5E9; font-size: 12px; letter-spacing: 2px; margin-bottom: 14px; }
+  .output-field { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(148,163,184,0.1); font-size: 13px; }
+  .output-field:last-child { border-bottom: none; }
+  .output-label { color: #64748B; font-weight: 500; }
+  .output-value { color: #E2E8F0; font-weight: 600; text-align: right; max-width: 60%; }
+  .output-value.high { color: #EF4444; }
+  .output-value.medium { color: #F59E0B; }
+  .output-value.teal { color: #0EA5E9; }
+  .output-value.green { color: #10B981; }
+
+  .stakeholder-map { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .stakeholder { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .stakeholder.owner { background: rgba(14,165,233,0.2); color: #0EA5E9; }
+  .stakeholder.input { background: rgba(16,185,129,0.15); color: #10B981; }
+  .stakeholder.approve { background: rgba(245,158,11,0.15); color: #F59E0B; }
+
+  /* SECTION 3: CLUSTERS */
+  .cluster-header { text-align: center; margin-bottom: 30px; }
+  .cluster-header h1 { font-size: 32px; font-weight: 800; }
+  .cluster-header h1 span { color: #0EA5E9; }
+  .cluster-header p { color: #64748B; font-size: 15px; max-width: 700px; margin: 8px auto 0; }
+
+  .clusters-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+  .cluster-group { background: #162640; border-radius: 14px; padding: 20px; border: 1px solid rgba(14,165,233,0.12); }
+  .cluster-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .cluster-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .cluster-name { font-size: 15px; font-weight: 700; color: #E2E8F0; }
+  .cluster-count { font-size: 12px; color: #64748B; margin-left: auto; background: rgba(148,163,184,0.1); padding: 2px 10px; border-radius: 10px; }
+  .cluster-items { }
+  .cluster-item { padding: 8px 12px; margin-bottom: 6px; background: rgba(15,27,45,0.6); border-radius: 8px; font-size: 12px; color: #94A3B8; display: flex; justify-content: space-between; align-items: center; }
+  .cluster-item .priority { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+  .priority.critical { background: rgba(239,68,68,0.15); color: #EF4444; }
+  .priority.high { background: rgba(245,158,11,0.15); color: #F59E0B; }
+  .priority.medium { background: rgba(14,165,233,0.15); color: #0EA5E9; }
+  .priority.low { background: rgba(148,163,184,0.1); color: #94A3B8; }
+  .cluster-meta { margin-top: 12px; display: flex; gap: 16px; font-size: 11px; color: #64748B; }
+  .cluster-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .cluster-summary { max-width: 800px; margin: 30px auto 0; background: linear-gradient(135deg, #0EA5E9, #0284C7); border-radius: 14px; padding: 24px 30px; text-align: center; }
+  .cluster-summary h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .cluster-summary p { font-size: 14px; color: rgba(255,255,255,0.8); }
+  .cluster-stats { display: flex; justify-content: center; gap: 40px; margin-top: 16px; }
+  .cluster-stat { text-align: center; }
+  .cluster-stat .num { font-size: 28px; font-weight: 800; color: #fff; }
+  .cluster-stat .label { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-brand">CLARI<span>OO</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection(0)">1. The Chaos</button>
+    <button class="nav-tab" onclick="showSection(1)">2. Clarioo Unpacks</button>
+    <button class="nav-tab" onclick="showSection(2)">3. Clustered & Prioritised</button>
+  </div>
+</div>
+
+<!-- SECTION 1: CHAOS -->
+<div class="section active" id="sec0">
+  <div class="chaos-header">
+    <div class="chaos-subtitle">WHAT ENTERPRISES DEAL WITH EVERY WEEK</div>
+    <h1>28 Requests. <span>Zero Infrastructure.</span></h1>
+    <p>These are real change requests flooding in from people, agents, meetings, and emails — across every function. Today, they live in Slack, inboxes, and people's heads.</p>
+  </div>
+  <div class="requests-grid" id="requestsGrid"></div>
+  <div class="chaos-count">
+    <strong>This is one week.</strong>
+    <p>No system captures these. No one triages them. Most will stall or die. The few that get acted on depend on who shouted loudest — not what matters most.</p>
+  </div>
+</div>
+
+<!-- SECTION 2: UNPACK -->
+<div class="section" id="sec1">
+  <div class="unpack-container">
+    <div class="unpack-header">
+      <div class="chaos-subtitle">HOW CLARIOO PROCESSES A SINGLE REQUEST</div>
+      <h1>From Vague Intent to <span>Structured Decision</span></h1>
+    </div>
+    <div class="unpack-flow">
+      <div class="unpack-left">
+        <div class="original-request">
+          <h3>RAW REQUEST</h3>
+          <div class="quote">"We need to explore using AI agents to improve our invoicing process. The current system is slow, error-prone, and our AP team is drowning."</div>
+          <div class="meta">Source: Ops Director, via Slack message to CFO · Tuesday 2:14pm</div>
+        </div>
+
+        <div class="unpack-step step-teal">
+          <h3>01 — UNDERSTAND</h3>
+          <h4>What's the real need behind this request?</h4>
+          <ul>
+            <li>Not just "AI agents" — the real pain is AP processing speed and error rate</li>
+            <li>Team of 4 processing ~800 invoices/month manually</li>
+            <li>Error rate: ~6% (industry avg: 1-2%)</li>
+            <li>Average processing time: 4.2 days (target: <1 day)</li>
+          </ul>
+        </div>
+
+        <div class="unpack-step step-cyan">
+          <h3>02 — CONTEXT</h3>
+          <h4>What exists today?</h4>
+          <ul>
+            <li>Current system: SAP + manual Excel reconciliation</li>
+            <li>ERP upgrade planned for Q3 (may affect integration)</li>
+            <li>Compliance requirement: SOX audit trail mandatory</li>
+            <li>Budget: Ops has $150K unallocated for automation initiatives</li>
+            <li>Related: Finance team raised a similar request 3 months ago (archived)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="unpack-right">
+        <div class="unpack-step step-green">
+          <h3>03 — ANALYSE</h3>
+          <h4>What are the options?</h4>
+          <ul>
+            <li>Option A: AI-native AP platform (Stampli, Tipalti) — $40-80K/yr, 2-week setup</li>
+            <li>Option B: SAP built-in automation module — $0 extra, but 3-month config</li>
+            <li>Option C: RPA + AI layer on existing stack (UiPath) — $60K/yr, custom build</li>
+            <li>Option D: Wait for Q3 ERP upgrade, assess then — $0, delays 4+ months</li>
+            <li>Recommendation: Option A scores highest on speed, accuracy, and compliance</li>
+          </ul>
+        </div>
+
+        <div class="unpack-step step-orange">
+          <h3>04 — STRUCTURE</h3>
+          <h4>Decision path & stakeholders</h4>
+          <ul>
+            <li>Decision owner: CFO (budget authority + compliance responsibility)</li>
+            <li>Input needed: IT (integration), Compliance (SOX), AP Team Lead (requirements)</li>
+            <li>Approval: CFO + CTO (if integration touches core systems)</li>
+            <li>Timeline: 3-week decision window before Q3 planning lock</li>
+            <li>Linked decisions: ERP upgrade (Q3), Finance automation roadmap</li>
+          </ul>
+        </div>
+
+        <div class="structured-output">
+          <h3>STRUCTURED DECISION CARD</h3>
+          <div class="output-field"><span class="output-label">Decision</span><span class="output-value teal">AP Invoice Automation</span></div>
+          <div class="output-field"><span class="output-label">Priority</span><span class="output-value high">High — $180K/yr manual cost, 6% error rate</span></div>
+          <div class="output-field"><span class="output-label">Complexity</span><span class="output-value medium">Medium — cross-functional, compliance-sensitive</span></div>
+          <div class="output-field"><span class="output-label">Est. decision time</span><span class="output-value green">3 weeks (parallel stakeholder input)</span></div>
+          <div class="output-field"><span class="output-label">Linked to</span><span class="output-value teal">ERP Upgrade (Q3) · Finance Automation Roadmap</span></div>
+          <div class="output-field"><span class="output-label">Cluster</span><span class="output-value teal">Process Automation (5 related requests)</span></div>
+          <div class="stakeholder-map">
+            <span class="stakeholder owner">CFO — Decision Owner</span>
+            <span class="stakeholder input">IT — Integration Review</span>
+            <span class="stakeholder input">AP Team Lead — Requirements</span>
+            <span class="stakeholder approve">Compliance — SOX Audit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: CLUSTERS -->
+<div class="section" id="sec2">
+  <div class="cluster-header">
+    <div class="chaos-subtitle">THE SYSTEM VIEW</div>
+    <h1>28 Requests → <span>6 Decision Clusters</span></h1>
+    <p>Clarioo automatically clusters related requests, detects duplicates, identifies dependencies, and surfaces what the organisation should focus on first.</p>
+  </div>
+  <div class="clusters-container" id="clustersContainer"></div>
+  <div class="cluster-summary">
+    <h3>From 28 chaotic requests to 6 structured decision tracks</h3>
+    <p>Each cluster has a clear owner, evidence package, stakeholder map, and timeline. Decision memory captures everything for the future.</p>
+    <div class="cluster-stats">
+      <div class="cluster-stat"><div class="num">28</div><div class="label">Raw requests captured</div></div>
+      <div class="cluster-stat"><div class="num">6</div><div class="label">Decision clusters</div></div>
+      <div class="cluster-stat"><div class="num">4</div><div class="label">Duplicates merged</div></div>
+      <div class="cluster-stat"><div class="num">3</div><div class="label">Dependencies found</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const requests = [
+  { text: "We need to automate our applicant tracking process", dept: "HR", source: "people", tags: ["automation","HR"] },
+  { text: "Can we explore using AI agents to improve invoicing?", dept: "Operations", source: "people", tags: ["AI","automation","finance"] },
+  { text: "Our CRM is too expensive — should we switch?", dept: "Sales", source: "email", tags: ["vendor","CRM","cost"] },
+  { text: "3 teams are using different project management tools", dept: "IT", source: "transcript", tags: ["consolidation","tools"] },
+  { text: "We should build our own analytics dashboard instead of paying Looker", dept: "Data", source: "people", tags: ["build-vs-buy","analytics"] },
+  { text: "Need to evaluate cybersecurity vendors — our contract expires in 60 days", dept: "IT Security", source: "email", tags: ["vendor","security","urgent"] },
+  { text: "The marketing team wants to adopt a new CDP platform", dept: "Marketing", source: "people", tags: ["vendor","martech"] },
+  { text: "Can we consolidate our 3 cloud storage providers?", dept: "IT", source: "agent", tags: ["consolidation","cloud"] },
+  { text: "We need a new contract management system", dept: "Legal", source: "people", tags: ["vendor","legal"] },
+  { text: "Should we outsource payroll or keep it in-house?", dept: "Finance", source: "transcript", tags: ["build-vs-buy","HR"] },
+  { text: "Agent detected: 4 overlapping SaaS subscriptions in marketing", dept: "AI Agent", source: "agent", tags: ["consolidation","SaaS","waste"] },
+  { text: "Engineering wants to switch from Jenkins to GitHub Actions", dept: "Engineering", source: "people", tags: ["vendor","DevOps"] },
+  { text: "Our customer support tool doesn't integrate with the new CRM", dept: "Support", source: "people", tags: ["integration","tools"] },
+  { text: "We're paying for Tableau but most teams use Google Sheets", dept: "Finance", source: "agent", tags: ["consolidation","analytics","waste"] },
+  { text: "Need to evaluate RPA tools for accounts payable", dept: "Operations", source: "people", tags: ["automation","finance","vendor"] },
+  { text: "The onboarding workflow takes 3 weeks — can we automate it?", dept: "HR", source: "transcript", tags: ["automation","HR","process"] },
+  { text: "Should we adopt Copilot across the organisation?", dept: "IT", source: "people", tags: ["AI","vendor","org-wide"] },
+  { text: "Our testing framework is blocking release cycles", dept: "QA", source: "people", tags: ["vendor","DevOps","urgent"] },
+  { text: "Agent flagged: compliance training platform unused for 6 months", dept: "AI Agent", source: "agent", tags: ["waste","compliance"] },
+  { text: "Can we replace our legacy ERP module for inventory?", dept: "Supply Chain", source: "people", tags: ["vendor","ERP","legacy"] },
+  { text: "Marketing and Sales use different definitions of 'qualified lead'", dept: "RevOps", source: "transcript", tags: ["process","alignment"] },
+  { text: "Need to decide: hire 2 more SDRs or invest in outbound automation", dept: "Sales", source: "people", tags: ["build-vs-buy","hiring"] },
+  { text: "IT helpdesk tickets have doubled — should we deploy an AI chatbot?", dept: "IT", source: "people", tags: ["AI","automation","support"] },
+  { text: "Our data warehouse costs have tripled in 12 months", dept: "Data", source: "agent", tags: ["cost","cloud","optimisation"] },
+  { text: "The legal team still reviews NDAs manually — 40 hrs/week", dept: "Legal", source: "transcript", tags: ["automation","legal","process"] },
+  { text: "Should we move from Slack to Teams to save on licensing?", dept: "IT", source: "email", tags: ["vendor","consolidation","cost"] },
+  { text: "We need a vendor for penetration testing — annual requirement", dept: "Security", source: "people", tags: ["vendor","security","compliance"] },
+  { text: "Agent recommendation: consolidate 2 CRM instances into 1", dept: "AI Agent", source: "agent", tags: ["consolidation","CRM"] },
+];
+
+const sourceLabels = { people: "PEOPLE", agent: "AI AGENT", transcript: "TRANSCRIPT", email: "EMAIL" };
+const sourceClasses = { people: "source-people", agent: "source-agent", transcript: "source-transcript", email: "source-email" };
+
+// Render chaos grid
+const grid = document.getElementById('requestsGrid');
+requests.forEach((r, i) => {
+  const card = document.createElement('div');
+  card.className = 'request-card' + (i === 1 ? ' highlighted' : '');
+  card.innerHTML = `
+    <span class="request-source ${sourceClasses[r.source]}">${sourceLabels[r.source]}</span>
+    <div class="request-dept">${r.dept}</div>
+    <div class="request-text">${r.text}</div>
+    <div>${r.tags.map(t => '<span class="request-tag">' + t + '</span>').join('')}</div>
+  `;
+  if (i === 1) card.onclick = () => showSection(1);
+  grid.appendChild(card);
+});
+
+// Render clusters
+const clusters = [
+  { name: "Process Automation", color: "#0EA5E9", items: [
+    { text: "AI agents for invoicing", priority: "high" },
+    { text: "Automate applicant tracking", priority: "medium" },
+    { text: "Automate onboarding workflow", priority: "medium" },
+    { text: "RPA tools for accounts payable", priority: "high" },
+    { text: "AI chatbot for IT helpdesk", priority: "medium" },
+    { text: "Automate NDA review (Legal)", priority: "low" },
+  ], deps: "Linked to: ERP Upgrade, AI Adoption", est: "~4 weeks" },
+  { name: "Vendor Consolidation", color: "#F59E0B", items: [
+    { text: "4 overlapping SaaS in marketing", priority: "critical" },
+    { text: "3 different PM tools across teams", priority: "high" },
+    { text: "Consolidate cloud storage providers", priority: "medium" },
+    { text: "Tableau vs Google Sheets overlap", priority: "medium" },
+    { text: "Slack vs Teams evaluation", priority: "low" },
+    { text: "Merge 2 CRM instances", priority: "high" },
+  ], deps: "Linked to: Cost Optimisation", est: "~6 weeks" },
+  { name: "Vendor Selection (Urgent)", color: "#EF4444", items: [
+    { text: "Cybersecurity vendor — 60 days to contract expiry", priority: "critical" },
+    { text: "Testing framework blocking releases", priority: "critical" },
+    { text: "Penetration testing vendor (annual)", priority: "high" },
+  ], deps: "Time-sensitive: contract deadlines", est: "~2 weeks" },
+  { name: "Build vs. Buy Decisions", color: "#10B981", items: [
+    { text: "Build analytics dashboard vs Looker", priority: "medium" },
+    { text: "Outsource payroll vs keep in-house", priority: "medium" },
+    { text: "Hire 2 SDRs vs outbound automation", priority: "high" },
+  ], deps: "Linked to: Budget Allocation Q3", est: "~3 weeks" },
+  { name: "AI & Agent Adoption", color: "#8B5CF6", items: [
+    { text: "Adopt Copilot across the org", priority: "high" },
+    { text: "CDP platform for marketing", priority: "medium" },
+    { text: "Jenkins → GitHub Actions migration", priority: "low" },
+  ], deps: "Linked to: Process Automation cluster", est: "~4 weeks" },
+  { name: "Cost Optimisation & Waste", color: "#06B6D4", items: [
+    { text: "CRM too expensive — evaluate alternatives", priority: "high" },
+    { text: "Data warehouse costs tripled", priority: "high" },
+    { text: "Compliance platform unused 6 months", priority: "low" },
+    { text: "Legacy ERP inventory module", priority: "medium" },
+  ], deps: "Linked to: Vendor Consolidation", est: "~3 weeks" },
+];
+
+const cc = document.getElementById('clustersContainer');
+clusters.forEach(cl => {
+  const div = document.createElement('div');
+  div.className = 'cluster-group';
+  div.innerHTML = `
+    <div class="cluster-title">
+      <div class="cluster-dot" style="background:${cl.color}"></div>
+      <div class="cluster-name">${cl.name}</div>
+      <div class="cluster-count">${cl.items.length} requests</div>
+    </div>
+    <div class="cluster-items">
+      ${cl.items.map(it => `<div class="cluster-item"><span>${it.text}</span><span class="priority ${it.priority}">${it.priority.toUpperCase()}</span></div>`).join('')}
+    </div>
+    <div class="cluster-meta">
+      <span>⏱ Est: ${cl.est}</span>
+      <span>🔗 ${cl.deps}</span>
+    </div>
+  `;
+  cc.appendChild(div);
+});
+
+function showSection(idx) {
+  document.querySelectorAll('.section').forEach((s, i) => s.classList.toggle('active', i === idx));
+  document.querySelectorAll('.nav-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
