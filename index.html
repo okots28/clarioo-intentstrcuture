@@ -756,6 +756,44 @@
   .dp-live-timeline { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(148,163,184,0.06); }
   .dp-live-timeline-dot { width: 6px; height: 6px; border-radius: 50%; }
 
+  /* ====== VALUE SECTION ====== */
+  .value-container { max-width: 1100px; margin: 0 auto; }
+  .value-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+  .value-block { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; position: relative; overflow: hidden; }
+  .value-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .value-block.block-decision::before { background: linear-gradient(90deg, var(--accent), var(--cyan)); }
+  .value-block.block-org::before { background: linear-gradient(90deg, var(--purple), var(--indigo)); }
+  .value-block-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .value-block.block-decision .value-block-label { color: var(--accent); }
+  .value-block.block-org .value-block-label { color: var(--purple); }
+  .value-block-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 24px; line-height: 1.3; }
+  .value-item { display: flex; gap: 14px; margin-bottom: 20px; align-items: flex-start; }
+  .value-item:last-child { margin-bottom: 0; }
+  .value-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .value-block.block-decision .value-icon { background: rgba(14,165,233,0.1); color: var(--accent); }
+  .value-block.block-org .value-icon { background: rgba(139,92,246,0.1); color: var(--purple); }
+  .value-item-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .value-item-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+  .value-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 48px; }
+  .value-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px 20px; text-align: center; }
+  .value-stat-num { font-size: 32px; font-weight: 900; margin-bottom: 4px; }
+  .value-stat-num.accent { background: linear-gradient(135deg, var(--accent), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .value-stat-num.green { color: var(--green); }
+  .value-stat-num.orange { color: var(--orange); }
+  .value-stat-num.purple { background: linear-gradient(135deg, var(--purple), var(--indigo)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .value-stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+  .value-cta { text-align: center; padding: 40px; background: linear-gradient(135deg, rgba(14,165,233,0.06), rgba(139,92,246,0.06)); border: 1px solid rgba(14,165,233,0.15); border-radius: 18px; }
+  .value-cta h3 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .value-cta p { font-size: 14px; color: var(--text-dim); line-height: 1.6; max-width: 600px; margin: 0 auto; }
+
+  @media (max-width: 768px) {
+    .value-columns { grid-template-columns: 1fr; }
+    .value-stat-row { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .value-stat-row { grid-template-columns: 1fr; }
+  }
+
   @media (max-width: 480px) {
     .section-title { font-size: 20px; }
     .capture-quote { font-size: 15px; }
@@ -782,6 +820,7 @@
     <button class="nav-tab" onclick="showSection(3)">4. Clarioo Unpacks</button>
     <button class="nav-tab" onclick="showSection(4)">5. Decision Path</button>
     <button class="nav-tab" onclick="showSection(5)">6. In Motion</button>
+    <button class="nav-tab" onclick="showSection(6)">7. The Value</button>
   </div>
 </div>
 
@@ -1851,6 +1890,142 @@
     <div class="dp-outcome" style="margin-top: 40px;">
       <h3>Clarioo keeps everything moving — so decisions don't stall</h3>
       <p>Every artifact is produced. Every stakeholder is engaged. Every blocker is surfaced.<br>Total stakeholder time so far: ~3 hours. Clarioo and other agents handle the rest.</p>
+    </div>
+
+    <div class="decision-next" onclick="showSection(6)" style="margin-top: 32px;">
+      <span>See the Value Clarioo Creates</span>
+      <span class="decision-next-arrow">&rarr;</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 7: THE VALUE ==================== -->
+<div class="section" id="sec6">
+  <div class="value-container">
+    <div class="section-label">Why This Matters</div>
+    <div class="section-title">The Value <span>Clarioo Creates</span></div>
+    <div class="section-desc">Every decision that flows through Clarioo is faster, grounded in evidence, and frees people to focus on what only humans can do — judgment.</div>
+
+    <!-- Stats row -->
+    <div class="value-stat-row">
+      <div class="value-stat">
+        <div class="value-stat-num accent">3 hrs</div>
+        <div class="value-stat-label">Total stakeholder time<br>for a structured decision</div>
+      </div>
+      <div class="value-stat">
+        <div class="value-stat-num green">80%</div>
+        <div class="value-stat-label">Less time spent<br>coordinating & chasing</div>
+      </div>
+      <div class="value-stat">
+        <div class="value-stat-num orange">100%</div>
+        <div class="value-stat-label">Evidence-backed<br>decision trail</div>
+      </div>
+      <div class="value-stat">
+        <div class="value-stat-num purple">0</div>
+        <div class="value-stat-label">Decisions lost in<br>Slack threads & inboxes</div>
+      </div>
+    </div>
+
+    <!-- Two columns: Decision Value + Org Value -->
+    <div class="value-columns">
+
+      <!-- LEFT: Value for Every Decision -->
+      <div class="value-block block-decision">
+        <div class="value-block-label">Value for Every Decision</div>
+        <div class="value-block-title">Better decisions, made faster</div>
+
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="value-item-title">Faster time-to-decision</div>
+            <div class="value-item-desc">Weeks of back-and-forth compressed into a structured, parallel process. No more stalled decisions waiting for someone to coordinate the next step.</div>
+          </div>
+        </div>
+
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H5a2 2 0 0 0-2 2"/><path d="M12.5 17H20a2 2 0 0 1 2 2"/><path d="M12 12.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M3 3l18 18"/></svg>
+          </div>
+          <div>
+            <div class="value-item-title">Evidence over opinion</div>
+            <div class="value-item-desc">Every recommendation is grounded in data, stakeholder input, and cross-functional context — not the loudest voice in the room.</div>
+          </div>
+        </div>
+
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div class="value-item-title">People focus on judgment, not logistics</div>
+            <div class="value-item-desc">Stakeholders spend their time reviewing evidence and making calls — not scheduling meetings, chasing inputs, or writing status updates.</div>
+          </div>
+        </div>
+
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <div class="value-item-title">Full decision trail, always</div>
+            <div class="value-item-desc">Every input, artifact, and rationale is captured automatically. No more reconstructing "why did we decide that?" six months later.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Value for the Organisation -->
+      <div class="value-block block-org">
+        <div class="value-block-label">Value for the Organisation</div>
+        <div class="value-block-title">Intelligence that compounds over time</div>
+
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div>
+            <div class="value-item-title">Decision graphs built over time</div>
+            <div class="value-item-desc">Every decision connects to others — forming a living graph of what the organisation has decided, why, and what depends on what. Context that no document can replace.</div>
+          </div>
+        </div>
+
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div>
+            <div class="value-item-title">Organisational intelligence compounds</div>
+            <div class="value-item-desc">Clarioo learns patterns across decisions — recurring blockers, stakeholder dynamics, vendor track records. The 100th decision is dramatically better informed than the first.</div>
+          </div>
+        </div>
+
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div>
+            <div class="value-item-title">Context for people and agent execution</div>
+            <div class="value-item-desc">When agents or new team members need to act, Clarioo provides the full decision context — not just what was decided, but the reasoning, constraints, and stakeholder intent behind it.</div>
+          </div>
+        </div>
+
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <div class="value-item-title">Decisions become a strategic asset</div>
+            <div class="value-item-desc">Instead of decisions disappearing into Slack and email, they become searchable, auditable, and connected — a real-time map of how the organisation thinks and acts.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="value-cta">
+      <h3>From chaos to clarity — at enterprise scale</h3>
+      <p>Clarioo doesn't just help you make one better decision. It builds the infrastructure for every decision that follows — so your organisation gets smarter, faster, with every choice it makes.</p>
     </div>
   </div>
 </div>
